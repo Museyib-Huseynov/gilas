@@ -26,6 +26,12 @@ body {
     min-height: 100vh;
 }
 
+.loading {
+    display: block;
+    width: 150px;
+    margin: auto;
+}
+
 
 
 

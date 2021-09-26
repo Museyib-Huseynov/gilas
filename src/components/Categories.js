@@ -1,18 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Category } from '.';
-import categories from '../data/categoriesList';
+import {Category, Error} from '.';
+import { useProductsContext } from '../context/products_context';
+import ReactLoading from 'react-loading';
+import * as icons from 'react-icons/fa';
 
 const Categories = () => {
+    const {categories_loading, categories_error, categories} = useProductsContext();
     return (
         <CategoriesContainer>
-            <h1>Bütün Kateqoriyalar</h1>
-            <div className='container'>
-                {categories.map((item, index) => {
-                    const {name, Icon} = item;
-                    return <Category key={index} name={name} Icon={Icon} />
-                })}
-            </div>
+            {categories_loading ? 
+            <ReactLoading type={'bars'} color={'#03b8f4'} width={'150px'} height={'150px'} /> :
+            categories_error ?
+            <Error /> :
+            <>
+                <h1>Bütün Kateqoriyalar</h1>
+                <div className='container'>
+                    {categories.map((category) => {
+                        const {id, title, icon} = category;
+                        let Icon = icons[icon];
+                        return <Category key={id} name={title} Icon={Icon}/>
+                    })}
+                
+                </div>
+            </> 
+            }
         </CategoriesContainer>
     )
 };

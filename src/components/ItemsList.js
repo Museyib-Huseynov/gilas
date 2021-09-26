@@ -1,38 +1,54 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {Items} from '.';
 import {useHistory } from 'react-router-dom';
-import categories from '../data/categoriesList';
+// import categories from '../data/categoriesList';
 import items from '../data/items';
 import { useFilterContext } from '../context/filter_context';
+import { useProductsContext } from '../context/products_context';
 import { UPDATE_FILTERS } from '../actions';
+import axios from 'axios';
+import ReactLoading from 'react-loading';
+
+const items_url = 'https://gilas.hymeria.com/api/v1/items';
 
 const ItemsList = () => {
-    const {dispatch} = useFilterContext();
-    let history = useHistory();
+    const {categories, items, items_loading} = useProductsContext();
 
-    const handleClick = (categoryName) => {
-        dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: categoryName}});
-        history.push('/products');
-    }
+    // const {dispatch} = useFilterContext();
+    // let history = useHistory();
+
+    // const handleClick = (categoryName) => {
+    //     dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: categoryName}});
+    //     history.push('/products');
+    // }
     return (
         <>
-            {categories.map((category) => {
-                const {name} = category;
-                const itemsPerCategoryArray = items.filter((item) => item.category === name);
+            {categories.length ?
+            items_loading ?
+            <ReactLoading 
+                type={'bubbles'} 
+                color={'#03b8f4'} 
+                width={'150px'} 
+                height={'150px'} 
+                className='loading' 
+            /> :
+            categories.map((category) => {
+                const {id, title} = category;
+                const itemsPerCategoryArray = items.filter((item) => item.category.id === id);
                 if (!itemsPerCategoryArray.length) return null;
                 return (
-                    <ItemsListContainer key={name}>
+                    <ItemsListContainer key={id}>
                         <h2>
-                            {name} 
-                            <span className='see-all' onClick={() => handleClick(name)}>
+                            {title} 
+                            <span className='see-all' onClick={() => {}}>
                                 Hamısına Bax
                             </span>
                         </h2>
                         <Items items={itemsPerCategoryArray}/>
                     </ItemsListContainer>
-                )
-            })}
+                );
+            }) : null}
         </>
     );
 };
@@ -44,6 +60,7 @@ const ItemsListContainer = styled.div`
     justify-content: center;
     align-items: center;
     // border: 2px solid red;
+
 
     h2 {
         width: 1416px;

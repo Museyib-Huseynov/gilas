@@ -16,3 +16,4 @@ export {default as GridView} from './GridView';
 export {default as ListView} from './ListView';
 export {default as Filters} from './Filters';
 export {default as DoubleRangeSlider} from './DoubleRangeSlider';
+export {default as Error} from './Error';

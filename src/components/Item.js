@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
 const Item = (props) => {
-    const {id, imgs, price, name, location, date} = props;
+    // const {id, imgs, price, name, location, date} = props;
+    const {id, images, price, title, full_name, renting_type} = props;
     
     let history = useHistory();
     const handleClick = () => {
@@ -11,11 +12,11 @@ const Item = (props) => {
     }
     return (
         <ItemContainer onClick={handleClick}>
-            <img src={imgs[0]} alt={name}/>
+            <img src={images[0]?.image_path} alt={title}/>
             <footer className='image-info'>
                 <p className='price'>{price} AZN</p>
-                <p className='name'>{name}</p>
-                <p className='date'>{location}, {date}</p>
+                <p className='name'>{title}</p>
+                <p className='date'>{full_name}, {renting_type}</p>
             </footer>
         </ItemContainer>
     )
