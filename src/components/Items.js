@@ -36,7 +36,8 @@ const Items = ({items=[]}) => {
         sliderRef.current.style.left = `${left + length}px`;
         setLeft(left + length);
     };
-  
+    
+    console.log(items.length / (length / 236).toFixed(2));
     return (
         <ItemsContainer>
             {left !==0 &&
@@ -52,7 +53,7 @@ const Items = ({items=[]}) => {
                 </div>
             </div>
 
-            {Math.ceil(items.length / (length / (innerWidth > 580 ? 236 : innerWidth > 360 ? 166 : 116))) !== (Math.abs(left / length) + 1) &&
+            {Math.ceil(items.length / (length / (innerWidth > 580 ? 236 : innerWidth > 360 ? 166 : 116)).toFixed(2)) !== (Math.abs(left / length) + 1) &&
             <button type='button' className='slide-btn right' onClick={slideRight}>
                 <AiFillRightCircle/>
             </button>} 

@@ -13,7 +13,11 @@ import ReactLoading from 'react-loading';
 const items_url = 'https://gilas.hymeria.com/api/v1/items';
 
 const ItemsList = () => {
-    const {categories, items, items_loading} = useProductsContext();
+    const {
+        categories, 
+        itemsByCategory, 
+        itemsByCategory_loading, 
+        itemsByCategory_error} = useProductsContext();
 
     // const {dispatch} = useFilterContext();
     // let history = useHistory();
@@ -22,10 +26,11 @@ const ItemsList = () => {
     //     dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: categoryName}});
     //     history.push('/products');
     // }
+    
     return (
         <>
             {categories.length ?
-            items_loading ?
+            itemsByCategory_loading ?
             <ReactLoading 
                 type={'bubbles'} 
                 color={'#03b8f4'} 
@@ -35,8 +40,8 @@ const ItemsList = () => {
             /> :
             categories.map((category) => {
                 const {id, title} = category;
-                const itemsPerCategoryArray = items.filter((item) => item.category.id === id);
-                if (!itemsPerCategoryArray.length) return null;
+                const itemsPerCategoryArray = itemsByCategory[id - 1];
+                if (!itemsPerCategoryArray?.length) return null;
                 return (
                     <ItemsListContainer key={id}>
                         <h2>
