@@ -37,7 +37,6 @@ const Items = ({items=[]}) => {
         setLeft(left + length);
     };
     
-    console.log(items.length / (length / 236).toFixed(2));
     return (
         <ItemsContainer>
             {left !==0 &&

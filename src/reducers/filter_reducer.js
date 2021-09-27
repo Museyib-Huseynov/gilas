@@ -7,6 +7,9 @@ import {
     UPDATE_FILTERS,
     FILTER_PRODUCTS,
     CLEAR_FILTERS,
+    ITEMS_BEGIN,
+    ITEMS_SUCCESS,
+    ITEMS_ERROR,
 } from '../actions';
 
 const filter_reducer = (state, action) => {
@@ -54,6 +57,8 @@ const filter_reducer = (state, action) => {
             maxPrice = Math.max(...maxPrice);
             return {
                 ...state,
+                all_products: [...action.payload],
+                filtered_products: [...action.payload],
                 filters: {
                     ...state.filters, 
                     max_price: maxPrice, 
@@ -99,6 +104,23 @@ const filter_reducer = (state, action) => {
                     price: state.filters.max_price,
                     min_price_limit: 0,
                 }
+            };
+        case ITEMS_BEGIN:
+            return {
+                ...state,
+                items_loading: true,
+            };
+        case ITEMS_SUCCESS:
+            return {
+                ...state,
+                items_loading: false,
+                filtered_products: action.payload,
+            };
+        case ITEMS_ERROR:
+            return {
+                ...state,
+                items_loading: false,
+                items_error: true,
             };
         default:
             return state;

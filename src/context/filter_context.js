@@ -9,14 +9,22 @@ import {
     UPDATE_FILTERS,
     FILTER_PRODUCTS,
     CLEAR_FILTERS,
+    ITEMS_BEGIN,
+    ITEMS_SUCCESS,
+    ITEMS_ERROR,
 } from '../actions';
-import items from '../data/items';
+import axios from 'axios';
+import { useProductsContext } from './products_context';
+
+const base_url = 'https://gilas.hymeria.com/api/v1/';
 
 const initialState = {
     gridView: true,
-    sort: 'price-lowest',
-    all_products: items,
-    filtered_products: items,
+    sort: 'asc',
+    all_products: [],
+    filtered_products: [],
+    items_loading: false,
+    items_error: false,
     filters: {
         text: '',
         category: 'Hamısı',
@@ -30,15 +38,17 @@ const initialState = {
 const FilterContext = React.createContext();
 
 export const FilterProvider = ({children}) => {
+    const {items} = useProductsContext();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        dispatch({type: LOAD_PRODUCTS, payload: state.all_products});
-    }, [state.all_products]);
+        dispatch({type: LOAD_PRODUCTS, payload: items});
+    }, [items]);
 
     useEffect(() => {
-        dispatch({type: FILTER_PRODUCTS})
-        dispatch({type: SORT_PRODUCTS})
+        // dispatch({type: FILTER_PRODUCTS})
+        // dispatch({type: SORT_PRODUCTS})
+        filterAndSortProducts();
     }, [state.sort, state.filters]);
 
     const setGridView = () => {
@@ -61,7 +71,7 @@ export const FilterProvider = ({children}) => {
             value = value.toLowerCase();
         }
         if (name === 'category') {
-            value = e.target.textContent;
+            value = e.target.id;
         }
         if (name === 'min_price_limit') {
             if (+value >= +state.filters.price) {
@@ -82,6 +92,24 @@ export const FilterProvider = ({children}) => {
             }
         }
         dispatch({type: UPDATE_FILTERS, payload: {name, value}})
+    };
+
+    const filterAndSortProducts = async () => {
+        dispatch({type: ITEMS_BEGIN});
+        try {
+            const {text, min_price, max_price, price, category} = state.filters;
+            const response = await axios.get(
+                `${base_url}items?
+                    title=${text}&
+                    min_price=${min_price}&
+                    max_price=${price}&
+                    category=${category}&
+                    sort=${price},${state.sort}`);
+            const data = response.data.data.data;
+            dispatch({type: ITEMS_SUCCESS, payload: data});
+        } catch {
+            dispatch({type: ITEMS_ERROR});
+        }
     };
 
     const clearFilters = (e) => {

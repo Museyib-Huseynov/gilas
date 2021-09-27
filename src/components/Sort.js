@@ -33,8 +33,8 @@ const Sort = () => {
                     className='sort-input'
                     onChange={updateSort}
                 >
-                    <option value='price-lowest'>Qiymətə görə (əvvəlcə ucuz)</option>
-                    <option value='price-highest'>Qiymətə görə (əvvəlcə bahalı)</option>
+                    <option value='asc'>Qiymətə görə (əvvəlcə ucuz)</option>
+                    <option value='desc'>Qiymətə görə (əvvəlcə bahalı)</option>
                     <option value='name-a'>Ada görə (a-z)</option>
                     <option value='name-z'>Ada görə (z-a)</option>
                 </select>

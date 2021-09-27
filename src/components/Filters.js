@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import categories from '../data/categoriesList';
+// import categories from '../data/categoriesList';
 import { useFilterContext } from '../context/filter_context';
+import { useProductsContext } from '../context/products_context';
 import {DoubleRangeSlider} from '.';
 
 const Filters = () => {
+    const {categories} = useProductsContext();
     const {filters: {
             text, 
             category, 
@@ -38,18 +40,19 @@ const Filters = () => {
                     >
                         Hamısı
                     </button>
-                    {categories.map((c, index) => {
+                    {categories.map((c) => {
                         return (
                         <button 
-                            key={index}
+                            key={c.id}
+                            id={c.id}
                             name={'category'} 
                             type='button'
                             className={`${
-                                category === c.name ? 'cat-btn active' : 'cat-btn'
+                                +category === +c.id ? 'cat-btn active' : 'cat-btn'
                               }`}
                             onClick={updateFilters}
                         >
-                            {c.name}
+                            {c.title}
                         </button>
                         );
                         

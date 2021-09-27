@@ -37,15 +37,15 @@ export const ProductsProvider = ({children}) => {
         dispatch({type: CATEGORIES_BEGIN});
         let categories;
         try {
-            // if (sessionStorage.getItem('categories')) {
-            //     categories = JSON.parse(sessionStorage.getItem('categories'));
-            // } else {
-            //     const response = await axios.get(url);
-            //     categories = response.data.data;
-            //     sessionStorage.setItem('categories', JSON.stringify(categories));
-            // }
-            const response = await axios.get(url);
-            categories = response.data.data;
+            if (sessionStorage.getItem('categories')) {
+                categories = JSON.parse(sessionStorage.getItem('categories'));
+            } else {
+                const response = await axios.get(url);
+                categories = response.data.data;
+                sessionStorage.setItem('categories', JSON.stringify(categories));
+            }
+            // const response = await axios.get(url);
+            // categories = response.data.data;
             dispatch({type: CATEGORIES_SUCCESS, payload: categories});
         } catch {
             dispatch({type: CATEGORIES_ERROR});
