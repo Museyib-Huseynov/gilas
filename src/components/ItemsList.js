@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
-import {Items} from '.';
 import {useHistory } from 'react-router-dom';
-// import categories from '../data/categoriesList';
-import items from '../data/items';
-import { useFilterContext } from '../context/filter_context';
-import { useProductsContext } from '../context/products_context';
-import { UPDATE_FILTERS } from '../actions';
+import styled from 'styled-components';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
-
-const items_url = 'https://gilas.hymeria.com/api/v1/items';
+import {Items} from '.';
+import { UPDATE_FILTERS } from '../actions';
+import { useCategoriesContext } from '../context/categories_context';
+import { useProductsContext } from '../context/products_context';
+import { useFilterContext } from '../context/filter_context';
 
 const ItemsList = () => {
+    const {categories} = useCategoriesContext();
     const {
-        categories, 
         itemsByCategory, 
         itemsByCategory_loading, 
         itemsByCategory_error} = useProductsContext();

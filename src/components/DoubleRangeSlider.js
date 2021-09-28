@@ -58,7 +58,7 @@ const DoubleRangeSlider = () => {
     const setRightValueAndUpdate = (e) => {
         setRightValue();
         updateFilters(e);
-    }
+    };
 
     return (
         <Wrapper>
@@ -71,6 +71,8 @@ const DoubleRangeSlider = () => {
                 value={min_price_limit}
                 ref={inputLeft} 
                 onInput={setLeftValueAndUpdate}
+                // onInput={setLeftValue}
+                // onBlur={setLeftValueAndUpdate}
             />
             <input 
                 id='right'

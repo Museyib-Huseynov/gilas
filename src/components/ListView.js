@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+import { useFilterContext } from '../context/filter_context';
 
 const ListView = ({products}) => {
+    const {filtered_products_loading} = useFilterContext();
     const [count, setCount] = useState(400);
 
     useEffect(() => {
@@ -14,16 +17,24 @@ const ListView = ({products}) => {
         }
     }, []);
 
-    console.log(count)
+    if (filtered_products_loading) {
+        return <ReactLoading 
+            type={'cubes'} 
+            color={'#03b8f4'} 
+            width={'150px'} 
+            height={'150px'} 
+            className='loading'/>;
+    }
+
     return (
         <>
             {products.map((product) => {
-                const {id, imgs, name, price, description} = product;
+                const {id, images, title, price, description} = product;
                 return (
                     <ListViewContainer key={id}>
-                        <img src={imgs[0]} alt={name} />
+                        <img src={images[0]?.image_path} alt={title} />
                         <div className='info'>
-                            <h3>{name}</h3>
+                            <h3>{title}</h3>
                             <h5 className='price'>{price} AZN</h5>
                             <p>{description.substring(0, count)}...</p>
                             <Link to={`/products/${id}`} className='btn'>

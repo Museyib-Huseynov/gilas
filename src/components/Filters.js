@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-// import categories from '../data/categoriesList';
 import { useFilterContext } from '../context/filter_context';
-import { useProductsContext } from '../context/products_context';
+import { useCategoriesContext } from '../context/categories_context';
 import {DoubleRangeSlider} from '.';
 
 const Filters = () => {
-    const {categories} = useProductsContext();
+    const {categories} = useCategoriesContext();
     const {filters: {
             text, 
             category, 

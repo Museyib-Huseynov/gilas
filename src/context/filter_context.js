@@ -3,28 +3,24 @@ import reducer from '../reducers/filter_reducer';
 import {
     SET_GRIDVIEW,
     SET_LISTVIEW,
-    UPDATE_SORT,
-    SORT_PRODUCTS,
     LOAD_PRODUCTS,
+    UPDATE_SORT,
     UPDATE_FILTERS,
-    FILTER_PRODUCTS,
+    FS_BEGIN,
+    FS_SUCCESS,
+    FS_ERROR,
     CLEAR_FILTERS,
-    ITEMS_BEGIN,
-    ITEMS_SUCCESS,
-    ITEMS_ERROR,
 } from '../actions';
 import axios from 'axios';
 import { useProductsContext } from './products_context';
-
-const base_url = 'https://gilas.hymeria.com/api/v1/';
 
 const initialState = {
     gridView: true,
     sort: 'asc',
     all_products: [],
     filtered_products: [],
-    items_loading: false,
-    items_error: false,
+    filtered_products_loading: false,
+    filtered_products_error: false,
     filters: {
         text: '',
         category: '',
@@ -38,7 +34,7 @@ const initialState = {
 const FilterContext = React.createContext();
 
 export const FilterProvider = ({children}) => {
-    const {items} = useProductsContext();
+    const {items, items_loading, items_error, items_url} = useProductsContext();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -46,8 +42,6 @@ export const FilterProvider = ({children}) => {
     }, [items]);
 
     useEffect(() => {
-        // dispatch({type: FILTER_PRODUCTS})
-        // dispatch({type: SORT_PRODUCTS})
         filterAndSortProducts();
     }, [state.sort, state.filters]);
 
@@ -95,20 +89,20 @@ export const FilterProvider = ({children}) => {
     };
 
     const filterAndSortProducts = async () => {
-        dispatch({type: ITEMS_BEGIN});
+        dispatch({type: FS_BEGIN});
         try {
             const {text, min_price_limit, price, category} = state.filters;
             const response = await axios.get(
-                `${base_url}items?
+                `${items_url}?
                     title=${text}&
                     min_price=${min_price_limit}&
                     max_price=${price}&
                     category=${category}&
                     sort=price,${state.sort}`);
             const data = response.data.data.data;
-            dispatch({type: ITEMS_SUCCESS, payload: data});
+            dispatch({type: FS_SUCCESS, payload: data});
         } catch {
-            dispatch({type: ITEMS_ERROR});
+            dispatch({type: FS_ERROR});
         }
     };
 

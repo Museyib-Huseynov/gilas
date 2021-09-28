@@ -1,8 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Item} from '../components';
+import ReactLoading from 'react-loading';
+import { useFilterContext } from '../context/filter_context';
 
 const GridView = ({products}) => {
+    const {filtered_products_loading} = useFilterContext();
+    if (filtered_products_loading) {
+        return <ReactLoading 
+            type={'cubes'} 
+            color={'#03b8f4'} 
+            width={'150px'} 
+            height={'150px'} 
+            className='loading'/>;
+    }
     return (
         <GridViewContainer>
             {products.map((product) => {

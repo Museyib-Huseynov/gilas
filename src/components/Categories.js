@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Category, Error} from '.';
-import { useProductsContext } from '../context/products_context';
+import { useCategoriesContext } from '../context/categories_context';
 import ReactLoading from 'react-loading';
 import * as icons from 'react-icons/fa';
 
 const Categories = () => {
-    const {categories_loading, categories_error, categories} = useProductsContext();
+    const {categories, categories_loading, categories_error} = useCategoriesContext();
     return (
         <CategoriesContainer>
             {categories_loading ? 

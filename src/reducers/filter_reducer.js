@@ -1,15 +1,13 @@
 import {
     SET_GRIDVIEW,
     SET_LISTVIEW,
-    SORT_PRODUCTS,
-    UPDATE_SORT,
     LOAD_PRODUCTS,
+    UPDATE_SORT,
     UPDATE_FILTERS,
-    FILTER_PRODUCTS,
+    FS_BEGIN,
+    FS_SUCCESS,
+    FS_ERROR,
     CLEAR_FILTERS,
-    ITEMS_BEGIN,
-    ITEMS_SUCCESS,
-    ITEMS_ERROR,
 } from '../actions';
 
 const filter_reducer = (state, action) => {
@@ -24,34 +22,6 @@ const filter_reducer = (state, action) => {
                 ...state,
                 gridView: false,
             };
-        case UPDATE_SORT:
-            return {
-                ...state,
-                sort: action.payload,
-            };
-        case SORT_PRODUCTS:
-            const {sort, filtered_products} = state;
-            let tempProducts = [...filtered_products];
-            if (sort === 'price-lowest') {
-                tempProducts = tempProducts.sort((a, b) => +a.price - +b.price);
-            }
-            if (sort === 'price-highest') {
-                tempProducts = tempProducts.sort((a, b) => +b.price - +a.price);
-            }
-            if (sort === 'name-a') {
-                tempProducts = tempProducts.sort((a, b) => {
-                    return a.name.localeCompare(b.name);
-                });
-            }
-            if (sort === 'name-z') {
-                tempProducts = tempProducts.sort((a, b) => {
-                    return b.name.localeCompare(a.name);
-                });
-            }
-            return {
-                ...state,
-                filtered_products: tempProducts,
-            };
         case LOAD_PRODUCTS:
             let maxPrice = action.payload.map(p => p.price);
             maxPrice = Math.max(...maxPrice);
@@ -64,6 +34,11 @@ const filter_reducer = (state, action) => {
                     max_price: maxPrice, 
                     price: maxPrice},
             };
+        case UPDATE_SORT:
+            return {
+                ...state,
+                sort: action.payload,
+            };
         case UPDATE_FILTERS:
             const {name, value} = action.payload;
             return {
@@ -73,26 +48,22 @@ const filter_reducer = (state, action) => {
                     [name]: value,
                 },
             };
-        case FILTER_PRODUCTS:
-            const {all_products} = state;
-            const {text, category, price, min_price_limit} = state.filters;
-            let temporaryProducts = [...all_products];
-            //filtering
-            //text
-            if (text) {
-                temporaryProducts = temporaryProducts.filter((product) => {
-                    return product.name.toLowerCase().startsWith(text);
-                });
-            }
-            //category
-            if (category !== 'Hamısı'){
-                temporaryProducts = temporaryProducts.filter(product => product.category === category);
-            }
-            //price
-            temporaryProducts = temporaryProducts.filter(product => +product.price >= min_price_limit && +product.price <= price );
+        case FS_BEGIN:
             return {
                 ...state,
-                filtered_products: temporaryProducts,
+                filtered_products_loading: true,
+            };
+        case FS_SUCCESS:
+            return {
+                ...state,
+                filtered_products_loading: false,
+                filtered_products: action.payload,
+            };
+        case FS_ERROR:
+            return {
+                ...state,
+                filtered_products_loading: false,
+                filtered_products_error: true,
             };
         case CLEAR_FILTERS:
             return {
@@ -104,23 +75,6 @@ const filter_reducer = (state, action) => {
                     price: state.filters.max_price,
                     min_price_limit: 0,
                 }
-            };
-        case ITEMS_BEGIN:
-            return {
-                ...state,
-                items_loading: true,
-            };
-        case ITEMS_SUCCESS:
-            return {
-                ...state,
-                items_loading: false,
-                filtered_products: action.payload,
-            };
-        case ITEMS_ERROR:
-            return {
-                ...state,
-                items_loading: false,
-                items_error: true,
             };
         default:
             return state;
