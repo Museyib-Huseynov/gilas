@@ -100,7 +100,7 @@ const filter_reducer = (state, action) => {
                 filters: {
                     ...state.filters,
                     text: '',
-                    category: 'Hamısı',
+                    category: '',
                     price: state.filters.max_price,
                     min_price_limit: 0,
                 }

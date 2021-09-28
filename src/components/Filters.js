@@ -34,7 +34,7 @@ const Filters = () => {
                         type='button'
                         name={'category'} 
                         className={`${
-                            category === 'Hamısı' ? 'cat-btn active' : 'cat-btn'
+                            category === '' ? 'cat-btn active' : 'cat-btn'
                           }`}
                           onClick={updateFilters}
                     >

@@ -5,13 +5,13 @@ import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS } from '../actions';
 
 const Category = (props) => {
-    const {name, Icon} = props;
+    const {name, id, Icon} = props;
     const {dispatch} = useFilterContext();
     const history = useHistory();
 
 
     const handleClick = () => {
-        dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: name}});
+        dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
         history.push('/products');
     }
     return (

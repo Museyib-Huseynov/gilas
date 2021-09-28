@@ -19,7 +19,7 @@ const Categories = () => {
                     {categories.map((category) => {
                         const {id, title, icon} = category;
                         let Icon = icons[icon];
-                        return <Category key={id} name={title} Icon={Icon}/>
+                        return <Category key={id} id={id} name={title} Icon={Icon}/>
                     })}
                 
                 </div>

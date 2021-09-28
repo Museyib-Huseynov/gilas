@@ -27,7 +27,7 @@ const initialState = {
     items_error: false,
     filters: {
         text: '',
-        category: 'Hamısı',
+        category: '',
         price: 0,
         max_price: 0,
         min_price: 0,
@@ -83,7 +83,7 @@ export const FilterProvider = ({children}) => {
         }
         if (name === 'price') {
             if (String(+value).length === String(+state.filters.min_price_limit).length) {
-                if (+value <= +state.filters.min_price_limit) {
+                if (+value <= +state.filters.min_price_limit && +value !== 0) {
                     value = +state.filters.min_price_limit;
                 }
             }
@@ -97,14 +97,14 @@ export const FilterProvider = ({children}) => {
     const filterAndSortProducts = async () => {
         dispatch({type: ITEMS_BEGIN});
         try {
-            const {text, min_price, max_price, price, category} = state.filters;
+            const {text, min_price_limit, price, category} = state.filters;
             const response = await axios.get(
                 `${base_url}items?
                     title=${text}&
-                    min_price=${min_price}&
+                    min_price=${min_price_limit}&
                     max_price=${price}&
                     category=${category}&
-                    sort=${price},${state.sort}`);
+                    sort=price,${state.sort}`);
             const data = response.data.data.data;
             dispatch({type: ITEMS_SUCCESS, payload: data});
         } catch {
