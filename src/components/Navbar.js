@@ -24,7 +24,10 @@ const Navbar = () => {
     return (
         <NavContainer>
                 {/* logo start */}
-                <Link to='/' className='logo-container'>
+                <Link to='/' 
+                    className='logo-container' 
+                    onClick={() => dispatch({type: CLEAR_FILTERS})}
+                >
                     <img src={logo} alt='logo'  className='logo'/>
                 </Link>    
                 {/* logo end */}

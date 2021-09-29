@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 const ProductImagesGallery = ({images=[]}) => {
-    const [mainImage, setMainImage] = useState(images[0]);
+    const [mainImage, setMainImage] = useState(images[0].image_path);
     const [imgIndex, setImgIndex] = useState(0);
 
     useEffect(() => {
-        setMainImage(images[imgIndex]);
+        setMainImage(images[imgIndex].image_path);
     }, [images, imgIndex]);
 
     const handleLeft = () => {
@@ -37,14 +37,14 @@ const ProductImagesGallery = ({images=[]}) => {
                 {images.map((image, index) => {
                     return (
                         <img 
-                            src={image} 
+                            src={image.image_path} 
                             alt='additional'
                             key={index}
                             onClick={() => {
-                                setMainImage(image);
+                                setMainImage(image.image_path);
                                 setImgIndex(index);
                             }} 
-                            className={`${image === mainImage ? 'add-img active' : 'add-img'}`}
+                            className={`${image.image_path === mainImage ? 'add-img active' : 'add-img'}`}
                         />
                     )
                 })}

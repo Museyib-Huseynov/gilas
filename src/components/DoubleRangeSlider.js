@@ -4,9 +4,9 @@ import { useFilterContext } from '../context/filter_context';
 
 const DoubleRangeSlider = () => {
     const {filters: { 
-        price, 
         max_price,
         min_price,
+        max_price_limit, 
         min_price_limit},
     updateFilters} = useFilterContext();
 
@@ -22,7 +22,7 @@ const DoubleRangeSlider = () => {
 
     useEffect(() => {
         setRightValue();
-    }, [price]);
+    }, [max_price_limit]);
 
     const setLeftValue = () => {
         let _this = inputLeft.current;
@@ -77,10 +77,10 @@ const DoubleRangeSlider = () => {
             <input 
                 id='right'
                 type='range' 
-                name='price'
+                name='max_price_limit'
                 min={min_price}
                 max={max_price}
-                value={price}
+                value={max_price_limit}
                 ref={inputRight} 
                 onInput={setRightValueAndUpdate}
             />

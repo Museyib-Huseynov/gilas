@@ -46,7 +46,7 @@ const ListView = ({products}) => {
             })}
             {products.length < 1 && 
             <h3 style={{letterSpacing: '1px'}}>
-                Bağışlayın, seçdiyiniz kreiteriya üzrə heç bir məhsul tapılmadı ...
+                Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı ...
             </h3>}
         </>
     );

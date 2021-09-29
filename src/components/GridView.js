@@ -7,12 +7,15 @@ import { useFilterContext } from '../context/filter_context';
 const GridView = ({products}) => {
     const {filtered_products_loading} = useFilterContext();
     if (filtered_products_loading) {
-        return <ReactLoading 
+        return (
+            <ReactLoading 
             type={'cubes'} 
             color={'#03b8f4'} 
             width={'150px'} 
             height={'150px'} 
-            className='loading'/>;
+            className='loading'
+            />
+        );
     }
     return (
         <GridViewContainer>
@@ -21,7 +24,7 @@ const GridView = ({products}) => {
             })}
             {products.length < 1 && 
             <h3 style={{letterSpacing: '1px'}}>
-                Bağışlayın, seçdiyiniz kreiteriya üzrə heç bir məhsul tapılmadı ...
+                Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı ...
             </h3>}
         </GridViewContainer>
     );

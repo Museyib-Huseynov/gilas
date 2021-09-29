@@ -9,9 +9,9 @@ const Filters = () => {
     const {filters: {
             text, 
             category, 
-            price, 
             max_price,
             min_price,
+            max_price_limit, 
             min_price_limit},
         updateFilters,
         clearFilters} = useFilterContext();
@@ -73,8 +73,8 @@ const Filters = () => {
                             type='number' 
                             min={min_price}
                             max={max_price}
-                            name='price' 
-                            value={price} 
+                            name='max_price_limit' 
+                            value={max_price_limit} 
                             onChange={updateFilters} 
                             className='price-input' 
                         />

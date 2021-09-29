@@ -8,6 +8,9 @@ import {
     ITEMS_PER_CATEGORY_BEGIN,
     ITEMS_PER_CATEGORY_SUCCESS,
     ITEMS_PER_CATEGORY_ERROR,
+    SINGLE_ITEM_BEGIN,
+    SINGLE_ITEM_SUCCESS,
+    SINGLE_ITEM_ERROR,
 } from '../actions';
 import { useCategoriesContext } from './categories_context';
 
@@ -20,6 +23,9 @@ const initialState = {
     itemsByCategory: [],
     itemsByCategory_loading: false,
     itemsByCategory_error: false,
+    single_item: {},
+    single_item_loading: false,
+    single_item_error: false,
 }
 
 const ProductsContext = React.createContext();
@@ -30,10 +36,12 @@ export const ProductsProvider = ({children}) => {
 
     useEffect(() => {
         fetchItems(items_url);
+        fetchSingleItem(2);
     }, []);
 
     useEffect(() => {
         fetchItemsPerCategory();
+        // eslint-disable-next-line
     }, [categories]);
 
     const fetchItems = async (url) => {
@@ -43,7 +51,7 @@ export const ProductsProvider = ({children}) => {
             const items = response.data.data.data;
             dispatch({type: ITEMS_SUCCESS, payload: items});            
         } catch {
-            dispatch({type: ITEMS_ERROR})
+            dispatch({type: ITEMS_ERROR});
         }
     };
 
@@ -63,10 +71,22 @@ export const ProductsProvider = ({children}) => {
         }
     };
 
+    const fetchSingleItem = async (id) => {
+        dispatch({type: SINGLE_ITEM_BEGIN});
+        try {
+            const response = await axios.get(`${items_url}/${id}`);
+            const item = response.data.data;
+            dispatch({type: SINGLE_ITEM_SUCCESS, payload: item});
+        } catch {
+            dispatch({type: SINGLE_ITEM_ERROR});
+        }
+    };
+
     return (
         <ProductsContext.Provider value={{
             ...state,
             items_url,
+            fetchSingleItem,
         }}>
             {children}
         </ProductsContext.Provider>

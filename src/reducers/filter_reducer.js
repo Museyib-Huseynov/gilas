@@ -8,6 +8,7 @@ import {
     FS_SUCCESS,
     FS_ERROR,
     CLEAR_FILTERS,
+    UPDATE_PRICE,
 } from '../actions';
 
 const filter_reducer = (state, action) => {
@@ -32,7 +33,7 @@ const filter_reducer = (state, action) => {
                 filters: {
                     ...state.filters, 
                     max_price: maxPrice, 
-                    price: maxPrice},
+                    max_price_limit: maxPrice},
             };
         case UPDATE_SORT:
             return {
@@ -48,6 +49,15 @@ const filter_reducer = (state, action) => {
                     [name]: value,
                 },
             };
+        case UPDATE_PRICE: 
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    max_price_limit_: state.filters.max_price_limit,
+                    min_price_limit_: state.filters.min_price_limit,
+                },
+            }
         case FS_BEGIN:
             return {
                 ...state,
@@ -72,7 +82,7 @@ const filter_reducer = (state, action) => {
                     ...state.filters,
                     text: '',
                     category: '',
-                    price: state.filters.max_price,
+                    max_price_limit: state.filters.max_price,
                     min_price_limit: 0,
                 }
             };

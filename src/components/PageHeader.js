@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useFilterContext } from '../context/filter_context';
+import { CLEAR_FILTERS } from '../actions';
 
 const PageHeader = ({title, product}) => {
+    const {dispatch} = useFilterContext();
     return (
         <PageHeaderContainer>
             <h3>
-                <Link to='/'>Əsas səhifə </Link>
+                <Link to='/' onClick={() => dispatch({type: CLEAR_FILTERS})}>
+                    Əsas səhifə 
+                </Link>
                 {product && <Link to='/products'>/ İcarəyə götür </Link>}
                 / {title}
             </h3>

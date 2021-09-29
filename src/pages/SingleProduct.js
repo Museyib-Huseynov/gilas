@@ -2,23 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import {ProductImagesGallery, PageHeader} from '../components';
-import items from '../data/items';
+// import items from '../data/items';
+import { useProductsContext } from '../context/products_context';
 
 const SingleProduct = () => {
     const {id}= useParams();
-    const {imgs, name, price, description, category, location, mobil} = items.find((item) => item.id === Number(id));
+    // const {imgs, name, price, description, category, location, mobil} = items.find((item) => item.id === Number(id));
+    const {single_item} = useProductsContext();
+    const {images, title, price, description, category, full_name, phone_number} = single_item;
 
     return (
         <div>
-            <PageHeader title={name} product/>
+            <PageHeader title={title} product/>
             <SingleProductContainer>
                 <Link to='/products' className='back-to-btn'>
                     Digər məhsullara bax
                 </Link>
                 <div className='product-center'>
-                    <ProductImagesGallery images={imgs}/>   
+                    <ProductImagesGallery images={images}/>   
                     <section className='product-content'>
-                        <h2>{name}</h2>
+                        <h2>{title}</h2>
                         <h3 className='price'>{price} AZN</h3>
                         <p className='description'>{description}</p>
                         <br/>
@@ -27,15 +30,15 @@ const SingleProduct = () => {
                         <hr/>
                         <p className='info'>
                             <span>Kateqoriya: </span>
-                            {category}
+                            {category.title}
                         </p>
                         <p className='info'>
                             <span>Şəhər: </span>
-                            {location}
+                            {full_name}
                         </p>
                         <p className='info'>
                             <span>Mobil: </span>
-                            {mobil}
+                            {phone_number}
                         </p>
                     
                     </section>

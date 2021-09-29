@@ -10,6 +10,7 @@ import {
     FS_SUCCESS,
     FS_ERROR,
     CLEAR_FILTERS,
+    UPDATE_PRICE,
 } from '../actions';
 import axios from 'axios';
 import { useProductsContext } from './products_context';
@@ -24,17 +25,19 @@ const initialState = {
     filters: {
         text: '',
         category: '',
-        price: 0,
         max_price: 0,
         min_price: 0,
+        max_price_limit: 0,
         min_price_limit: 0,
+        max_price_limit_: 0,
+        min_price_limit_: 0,
     },
 }
 
 const FilterContext = React.createContext();
 
 export const FilterProvider = ({children}) => {
-    const {items, items_loading, items_error, items_url} = useProductsContext();
+    const {items, items_url} = useProductsContext();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -43,7 +46,18 @@ export const FilterProvider = ({children}) => {
 
     useEffect(() => {
         filterAndSortProducts();
-    }, [state.sort, state.filters]);
+        // eslint-disable-next-line
+    }, [state.sort, 
+        state.filters.text, 
+        state.filters.category, 
+        state.filters.min_price_limit_, 
+        state.filters.max_price_limit_]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch({type: UPDATE_PRICE});
+        }, 1000);
+    }, [state.filters.max_price_limit, state.filters.min_price_limit]);
 
     const setGridView = () => {
         dispatch({type: SET_GRIDVIEW});
@@ -68,14 +82,14 @@ export const FilterProvider = ({children}) => {
             value = e.target.id;
         }
         if (name === 'min_price_limit') {
-            if (+value >= +state.filters.price) {
-                value = +state.filters.price;
+            if (+value >= +state.filters.max_price_limit) {
+                value = +state.filters.max_price_limit;
             }
             if (+value < 0) {
                 value = 0;
             }
         }
-        if (name === 'price') {
+        if (name === 'max_price_limit') {
             if (String(+value).length === String(+state.filters.min_price_limit).length) {
                 if (+value <= +state.filters.min_price_limit && +value !== 0) {
                     value = +state.filters.min_price_limit;
@@ -91,12 +105,12 @@ export const FilterProvider = ({children}) => {
     const filterAndSortProducts = async () => {
         dispatch({type: FS_BEGIN});
         try {
-            const {text, min_price_limit, price, category} = state.filters;
+            const {text, min_price_limit_, max_price_limit_, category} = state.filters;
             const response = await axios.get(
                 `${items_url}?
                     title=${text}&
-                    min_price=${min_price_limit}&
-                    max_price=${price}&
+                    min_price=${min_price_limit_}&
+                    max_price=${max_price_limit_}&
                     category=${category}&
                     sort=price,${state.sort}`);
             const data = response.data.data.data;

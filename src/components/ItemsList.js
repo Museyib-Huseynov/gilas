@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import ReactLoading from 'react-loading';
 import {Items} from '.';
 import { UPDATE_FILTERS } from '../actions';
@@ -15,14 +14,13 @@ const ItemsList = () => {
         itemsByCategory, 
         itemsByCategory_loading, 
         itemsByCategory_error} = useProductsContext();
+    const {dispatch} = useFilterContext();
+    let history = useHistory();
 
-    // const {dispatch} = useFilterContext();
-    // let history = useHistory();
-
-    // const handleClick = (categoryName) => {
-    //     dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: categoryName}});
-    //     history.push('/products');
-    // }
+    const handleClick = (id) => {
+        dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
+        history.push('/products');
+    }
     
     return (
         <>
@@ -43,7 +41,7 @@ const ItemsList = () => {
                     <ItemsListContainer key={id}>
                         <h2>
                             {title} 
-                            <span className='see-all' onClick={() => {}}>
+                            <span className='see-all' onClick={() => {handleClick(id)}}>
                                 Hamısına Bax
                             </span>
                         </h2>
