@@ -2,15 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import {ProductImagesGallery, PageHeader} from '../components';
-// import items from '../data/items';
+import ReactLoading from 'react-loading';
 import { useProductsContext } from '../context/products_context';
 
 const SingleProduct = () => {
     const {id}= useParams();
-    // const {imgs, name, price, description, category, location, mobil} = items.find((item) => item.id === Number(id));
-    const {single_item} = useProductsContext();
+    const {single_item, single_item_loading} = useProductsContext();
     const {images, title, price, description, category, full_name, phone_number} = single_item;
 
+    if (single_item_loading) {
+        <ReactLoading 
+            type={'bars'} 
+            color={'#03b8f4'} 
+            width={'150px'} 
+            height={'150px'} 
+        />
+    }
     return (
         <div>
             <PageHeader title={title} product/>
@@ -25,22 +32,19 @@ const SingleProduct = () => {
                         <h3 className='price'>{price} AZN</h3>
                         <p className='description'>{description}</p>
                         <br/>
-                        <p className='description'>{description}</p>
-                        <br/>
                         <hr/>
                         <p className='info'>
                             <span>Kateqoriya: </span>
-                            {category.title}
+                            {category?.title}
                         </p>
                         <p className='info'>
-                            <span>Şəhər: </span>
+                            <span>Məsul şəxs: </span>
                             {full_name}
                         </p>
                         <p className='info'>
                             <span>Mobil: </span>
                             {phone_number}
                         </p>
-                    
                     </section>
                 </div>
             </SingleProductContainer>

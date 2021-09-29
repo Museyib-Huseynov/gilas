@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 const ProductImagesGallery = ({images=[]}) => {
-    const [mainImage, setMainImage] = useState(images[0].image_path);
+    const [mainImage, setMainImage] = useState(images[0]?.image_path);
     const [imgIndex, setImgIndex] = useState(0);
 
     useEffect(() => {
-        setMainImage(images[imgIndex].image_path);
+        setMainImage(images[imgIndex]?.image_path);
     }, [images, imgIndex]);
 
     const handleLeft = () => {
@@ -33,6 +33,7 @@ const ProductImagesGallery = ({images=[]}) => {
                 <AiFillRightCircle />
             </div>}
             
+            <div className='slideLeft'>&lt;</div>
             <div className='gallery'>
                 {images.map((image, index) => {
                     return (
@@ -49,6 +50,7 @@ const ProductImagesGallery = ({images=[]}) => {
                     )
                 })}
             </div>
+            <div className='slideRight'>&gt;</div>
         </ProductImagesGalleryContainer>
     );
 };
@@ -92,16 +94,17 @@ const ProductImagesGalleryContainer = styled.div`
     }
 
     .gallery {
-        width: 100%;
         display: flex;
-        justify-content: space-between;
-        // border: 2px solid black;
+        flex-direction: row;
+        overflow: hidden;
+        // outline: 2px solid red;
     }
-
+    
     .add-img {
         width: 18%;
         height: 70px;
-        margin: 10px 0;
+        flex-shrink: 0;
+        margin: 1%;
         border-radius: 10px;
         object-fit: cover;
         cursor: pointer;
@@ -109,6 +112,22 @@ const ProductImagesGalleryContainer = styled.div`
 
     .active {
         box-shadow: 0px 0px 0px 2px #00C1FF;
+    }
+
+    .slideLeft {
+        position: absolute;
+        bottom: calc(19px + 1%);
+        left: -30px;
+        font-size: 32px;
+        cursor: pointer;
+    }
+
+    .slideRight {
+        position: absolute;
+        bottom: calc(19px + 1%);
+        right: -30px;
+        font-size: 32px;
+        cursor: pointer;
     }
 
     @media screen and (max-width: 1200px) {
