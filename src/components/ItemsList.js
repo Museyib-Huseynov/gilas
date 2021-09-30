@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactLoading from 'react-loading';
@@ -12,8 +12,7 @@ const ItemsList = () => {
     const {categories} = useCategoriesContext();
     const {
         itemsByCategory, 
-        itemsByCategory_loading, 
-        itemsByCategory_error} = useProductsContext();
+        itemsByCategory_loading} = useProductsContext();
     const {dispatch} = useFilterContext();
     let history = useHistory();
 

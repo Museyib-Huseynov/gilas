@@ -17,7 +17,7 @@ const ProductImagesGallery = ({images=[]}) => {
     const handleLeft = () => {
         if (imgIndex !== 0) {
             setImgIndex(imgIndex - 1);
-            if (countRight !== 0 ) {
+            if (countRight !== 0 && (imgIndex - countRight) === 0 ) {
                 handleSlideLeft();
             }
         }
@@ -26,7 +26,7 @@ const ProductImagesGallery = ({images=[]}) => {
     const handleRight = () => {
         if (imgIndex !== images.length - 1) {
             setImgIndex(imgIndex + 1);
-            if (imgIndex >= 4 && countRight !== images.length - 5) {
+            if (imgIndex >= 4 && (imgIndex - countRight) === 4) {
                 handleSlideRight();
             }
         }
@@ -34,13 +34,13 @@ const ProductImagesGallery = ({images=[]}) => {
 
     const handleSlideLeft = () => {
         slideRef.current.style.left = `calc(${slideLeft} + 20%)`;
-        setSlideLeft(getComputedStyle(slideRef.current).left);
+        setSlideLeft(slideRef.current.style.left);
         setCountRight(countRight - 1);
     };
 
     const handleSlideRight = () => {
         slideRef.current.style.left = `calc(${slideLeft} - 20%)`;
-        setSlideLeft(getComputedStyle(slideRef.current).left);
+        setSlideLeft(slideRef.current.style.left);
         setCountRight(countRight + 1);
     };
 
@@ -85,13 +85,13 @@ const ProductImagesGallery = ({images=[]}) => {
 };
 
 const ProductImagesGalleryContainer = styled.div`
-    display: inline-block;
+    display: block;
     width: 40%;
     height: fit-content;
     -moz-user-select: none;
     -webkit-user-select: none;
     position: relative;
-    // border: 2px solid #000;
+    // outline: 2px solid #000;
 
     .main-image {
         display:block;
@@ -122,13 +122,20 @@ const ProductImagesGalleryContainer = styled.div`
         transform: translateY(-50%);
     }
 
-    .gallery {
-        display: flex;
-        flex-direction: row;
+    .gallery-container {
         overflow: hidden;
         // outline: 2px solid red;
     }
-    
+
+    .gallery {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: relative;
+        left: 0px;
+        transition: left .1s linear;
+    }
+
     .add-img {
         width: 18%;
         height: 70px;
@@ -140,23 +147,22 @@ const ProductImagesGalleryContainer = styled.div`
     }
 
     .active {
-        box-shadow: 0px 0px 0px 2px #00C1FF;
+        box-shadow: 0px 0px 0px 3px #00C1FF;
+    }
+
+    .slide {
+        position: absolute;
+        bottom: calc(19px + 1%); // (70px - 32px) / 2 = 19px
+        font-size: 32px;
+        cursor: pointer;
     }
 
     .slideLeft {
-        position: absolute;
-        bottom: calc(19px + 1%);
         left: -30px;
-        font-size: 32px;
-        cursor: pointer;
     }
 
     .slideRight {
-        position: absolute;
-        bottom: calc(19px + 1%);
         right: -30px;
-        font-size: 32px;
-        cursor: pointer;
     }
 
     @media screen and (max-width: 1200px) {
@@ -169,13 +175,17 @@ const ProductImagesGalleryContainer = styled.div`
         .arrow {
             font-size: 3rem;
         }
-    
+
         .left {
             top: calc(50% - 40px);
         }
-    
+
         .right {
             top: calc(50% - 40px);
+        }
+
+        .slide {
+            bottom: calc(14px + 1%); // (60px - 32px) / 2 = 14px
         }
     }
 
@@ -189,15 +199,18 @@ const ProductImagesGalleryContainer = styled.div`
         .arrow {
             font-size: 2rem;
         }
-    
+
         .left {
             top: calc(50% - 37.5px);
         }
-    
+
         .right {
             top: calc(50% - 37.5px);
         }
-        
+
+        .slide {
+            bottom: calc(11.5px + 1%); // (55px - 32px) / 2 = 11.5px
+        }        
     }
 
     @media screen and (max-width: 800px) {
@@ -207,6 +220,9 @@ const ProductImagesGalleryContainer = styled.div`
         }
         .add-img {
             height: 80px;
+        }
+        .slide {
+            bottom: calc(24px + 1%); // (80px - 32px) / 2 = 24px
         }
     }
 
@@ -221,16 +237,19 @@ const ProductImagesGalleryContainer = styled.div`
         .arrow {
             font-size: 2rem;
         }
-    
+
         .left {
             top: calc(50% - 35px);
         }
-    
+
         .right {
             top: calc(50% - 35px);
         }
-    }
 
+        .slide {
+            bottom: calc(9px + 1%); // (50px - 32px) / 2 = 9px
+        }
+    }
 `;
 
 export default ProductImagesGallery;
