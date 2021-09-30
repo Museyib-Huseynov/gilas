@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 const ProductImagesGallery = ({images=[]}) => {
     const [mainImage, setMainImage] = useState(images[0]?.image_path);
     const [imgIndex, setImgIndex] = useState(0);
+    const [slideLeft, setSlideLeft] = useState('0px');
+    const [countRight, setCountRight] = useState(0);
+
+    const slideRef = useRef(null);
 
     useEffect(() => {
         setMainImage(images[imgIndex]?.image_path);
@@ -13,14 +17,33 @@ const ProductImagesGallery = ({images=[]}) => {
     const handleLeft = () => {
         if (imgIndex !== 0) {
             setImgIndex(imgIndex - 1);
+            if (countRight !== 0 ) {
+                handleSlideLeft();
+            }
         }
     };
 
     const handleRight = () => {
         if (imgIndex !== images.length - 1) {
             setImgIndex(imgIndex + 1);
+            if (imgIndex >= 4 && countRight !== images.length - 5) {
+                handleSlideRight();
+            }
         }
     };
+
+    const handleSlideLeft = () => {
+        slideRef.current.style.left = `calc(${slideLeft} + 20%)`;
+        setSlideLeft(getComputedStyle(slideRef.current).left);
+        setCountRight(countRight - 1);
+    };
+
+    const handleSlideRight = () => {
+        slideRef.current.style.left = `calc(${slideLeft} - 20%)`;
+        setSlideLeft(getComputedStyle(slideRef.current).left);
+        setCountRight(countRight + 1);
+    };
+
     return (
         <ProductImagesGalleryContainer>
             {imgIndex !== 0 && 
@@ -33,24 +56,30 @@ const ProductImagesGallery = ({images=[]}) => {
                 <AiFillRightCircle />
             </div>}
             
-            <div className='slideLeft'>&lt;</div>
-            <div className='gallery'>
-                {images.map((image, index) => {
-                    return (
-                        <img 
-                            src={image.image_path} 
-                            alt='additional'
-                            key={index}
-                            onClick={() => {
-                                setMainImage(image.image_path);
-                                setImgIndex(index);
-                            }} 
-                            className={`${image.image_path === mainImage ? 'add-img active' : 'add-img'}`}
-                        />
-                    )
-                })}
+            {(slideLeft !== '0px' && countRight !== 0) &&
+                <div className='slideLeft' onClick={handleSlideLeft}>&lt;</div>
+            }
+            <div className='gallery-container'>
+                <div className='gallery' ref={slideRef}>
+                    {images.map((image, index) => {
+                        return (
+                            <img 
+                                src={image.image_path} 
+                                alt='additional'
+                                key={index}
+                                onClick={() => {
+                                    setMainImage(image.image_path);
+                                    setImgIndex(index);
+                                }} 
+                                className={`${image.image_path === mainImage ? 'add-img active' : 'add-img'}`}
+                            />
+                        )
+                    })}
+                </div>
             </div>
-            <div className='slideRight'>&gt;</div>
+            {(images.length > 5 && countRight < (images.length - 5)) &&
+                <div className='slideRight' onClick={handleSlideRight}>&gt;</div>
+            }       
         </ProductImagesGalleryContainer>
     );
 };
