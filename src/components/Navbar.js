@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
-import {Link, NavLink, useHistory} from 'react-router-dom';
+import {Link, NavLink, useHistory, useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import logo from '../Logo-1.svg';
+import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS, CLEAR_FILTERS } from '../actions';
 
 const Navbar = () => {
     const [text, setText] = useState('');
-    const {dispatch} = useFilterContext();
+    const {fetchItems} = useProductsContext();
+    const {dispatch, filterAndSortProducts} = useFilterContext();
     let history = useHistory();
+    let location = useLocation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,6 +31,7 @@ const Navbar = () => {
                     onClick={() => {
                         dispatch({type: CLEAR_FILTERS})
                         setText('');
+                        fetchItems();
                     }}
                 >
                     <img src={logo} alt='logo'  className='logo'/>
@@ -57,6 +61,9 @@ const Navbar = () => {
                             onClick={() => {
                                 dispatch({type: CLEAR_FILTERS})
                                 setText('');
+                                if (location.pathname === '/products') {
+                                    filterAndSortProducts();
+                                }
                             }}
                         />
                         <NavLink to='/newad' className='link2' activeClassName='active' />

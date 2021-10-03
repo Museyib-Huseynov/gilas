@@ -35,18 +35,13 @@ export const ProductsProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        fetchItems(items_url);
+        fetchItems();
     }, []);
 
-    useEffect(() => {
-        fetchItemsPerCategory();
-        // eslint-disable-next-line
-    }, [categories]);
-
-    const fetchItems = async (url) => {
+    const fetchItems = async () => {
         dispatch({type: ITEMS_BEGIN});
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(items_url);
             const items = response.data.data.data;
             dispatch({type: ITEMS_SUCCESS, payload: items});            
         } catch {
@@ -85,6 +80,7 @@ export const ProductsProvider = ({children}) => {
         <ProductsContext.Provider value={{
             ...state,
             items_url,
+            fetchItems,
             fetchSingleItem,
         }}>
             {children}

@@ -1,11 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {Sort, GridView, ListView, Filters} from '../components';
 import { useFilterContext } from '../context/filter_context';
 import {PageHeader} from '../components';
 
 const Products = () => {
-    const {filtered_products, gridView} = useFilterContext();
+    const {
+        filtered_products, 
+        gridView,
+        filterAndSortProducts,
+        sort,
+        filters,
+    } = useFilterContext();
+
+    useEffect(() => {
+        filterAndSortProducts();
+        // eslint-disable-next-line
+    }, [sort, 
+        filters.text, 
+        filters.category, 
+        filters.min_price_limit_, 
+        filters.max_price_limit_]);
+
     return (
         <>
             <PageHeader title='İcarəyə götür' />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactLoading from 'react-loading';
@@ -10,9 +10,7 @@ import { useFilterContext } from '../context/filter_context';
 
 const ItemsList = () => {
     const {categories} = useCategoriesContext();
-    const {
-        itemsByCategory, 
-        itemsByCategory_loading} = useProductsContext();
+    const {items, items_loading} = useProductsContext();
     const {dispatch} = useFilterContext();
     let history = useHistory();
 
@@ -24,7 +22,7 @@ const ItemsList = () => {
     return (
         <>
             {categories.length ?
-            itemsByCategory_loading ?
+            items_loading ?
             <ReactLoading 
                 type={'bubbles'} 
                 color={'#03b8f4'} 
@@ -34,7 +32,7 @@ const ItemsList = () => {
             /> :
             categories.map((category) => {
                 const {id, title} = category;
-                const itemsPerCategoryArray = itemsByCategory[id - 1];
+                const itemsPerCategoryArray = items.filter((item) => item.category.id === id);
                 if (!itemsPerCategoryArray?.length) return null;
                 return (
                     <ItemsListContainer key={id}>

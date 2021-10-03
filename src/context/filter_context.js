@@ -43,16 +43,7 @@ export const FilterProvider = ({children}) => {
     useEffect(() => {
         dispatch({type: LOAD_PRODUCTS, payload: items});
     }, [items]);
-
-    useEffect(() => {
-        filterAndSortProducts();
-        // eslint-disable-next-line
-    }, [state.sort, 
-        state.filters.text, 
-        state.filters.category, 
-        state.filters.min_price_limit_, 
-        state.filters.max_price_limit_]);
-
+    
     useEffect(() => {
         setTimeout(() => {
             dispatch({type: UPDATE_PRICE});
@@ -133,6 +124,7 @@ export const FilterProvider = ({children}) => {
             updateSort,
             updateFilters,
             clearFilters,
+            filterAndSortProducts,
         }}>
             {children}
         </FilterContext.Provider>

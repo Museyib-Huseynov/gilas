@@ -32,8 +32,8 @@ const filter_reducer = (state, action) => {
                 filtered_products: [...action.payload],
                 filters: {
                     ...state.filters, 
-                    max_price: maxPrice, 
-                    max_price_limit: maxPrice},
+                    max_price: maxPrice,
+                },
             };
         case UPDATE_SORT:
             return {
@@ -82,7 +82,7 @@ const filter_reducer = (state, action) => {
                     ...state.filters,
                     text: '',
                     category: '',
-                    max_price_limit: state.filters.max_price,
+                    max_price_limit: 0,
                     min_price_limit: 0,
                 }
             };

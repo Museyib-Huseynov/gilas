@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Link, NavLink, useHistory} from 'react-router-dom';
+import {Link, NavLink, useHistory, useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 import {AiOutlineMenu, AiOutlineSearch} from 'react-icons/ai';
 import {FaTimes, FaAdversal} from 'react-icons/fa';
 import {BsCollectionFill} from 'react-icons/bs';
+import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS, CLEAR_FILTERS } from '../actions';
 import logo from '../Logo-1.svg';
@@ -13,8 +14,10 @@ const Sidebar = () => {
     const [isMenuActive, setIsMenuActive] = useState(false);
     const [text, setText] = useState('');
 
-    const {dispatch} = useFilterContext();
+    const {fetchItems} = useProductsContext();
+    const {dispatch, filterAndSortProducts} = useFilterContext();
     let history = useHistory();
+    let location = useLocation();
 
     const linksContainerRef = useRef(null);
     const linksRef = useRef(null);
@@ -59,6 +62,7 @@ const Sidebar = () => {
                     onClick={() => {
                         dispatch({type: CLEAR_FILTERS})
                         setText('');
+                        fetchItems();
                     }}
                 >
                     <img src={logo} alt='logo'  className='logo'/>
@@ -108,15 +112,15 @@ const Sidebar = () => {
                             setIsMenuActive(false);
                             dispatch({type: CLEAR_FILTERS});
                             setText('');
+                            if (location.pathname === '/products') {
+                                filterAndSortProducts();
+                            }
                         }}>
                         <BsCollectionFill style={{margin: '0 1rem'}}/> İcarəyə Götür
                     </NavLink>
                     <Link to='/newad' className='link' onClick={() => setIsMenuActive(false)}>
                         <FaAdversal style={{margin: '0 1rem'}}/> İcarəyə Ver
                     </Link>
-                    {/* <Link to='/signUp' className='link' onClick={() => setIsMenuActive(false)}>
-                        <HiUserAdd style={{margin: '0 1rem'}}/> Qeydiyyat
-                    </Link> */}
                 </div>
             </div>
 
