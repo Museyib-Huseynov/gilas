@@ -5,3 +5,4 @@ export {default as Signup} from './Signup';
 export {default as SingleProduct} from './SingleProduct';
 export {default as NewAd} from './NewAd';
 export {default as Products} from './Products';
+export {default as FormSuccess} from './FormSuccess';

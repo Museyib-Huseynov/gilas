@@ -36,7 +36,6 @@ export const ProductsProvider = ({children}) => {
 
     useEffect(() => {
         fetchItems(items_url);
-        fetchSingleItem(2);
     }, []);
 
     useEffect(() => {

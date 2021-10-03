@@ -10,7 +10,7 @@ const PageHeader = ({title, product}) => {
         <PageHeaderContainer>
             <h3>
                 <Link to='/' onClick={() => dispatch({type: CLEAR_FILTERS})}>
-                    Əsas səhifə 
+                    Əsas səhifə&#160;  
                 </Link>
                 {product && <Link to='/products'>/ İcarəyə götür </Link>}
                 / {title}

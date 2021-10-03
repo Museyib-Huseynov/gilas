@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {ProductImagesGallery, PageHeader} from '../components';
 import ReactLoading from 'react-loading';
 import { useProductsContext } from '../context/products_context';
 
 const SingleProduct = () => {
-    const {single_item, single_item_loading} = useProductsContext();
+    const {single_item, single_item_loading, fetchSingleItem} = useProductsContext();
     const {images, title, price, description, category, full_name, phone_number} = single_item;
+
+    let {id} = useParams();
+    useEffect(() => {
+        fetchSingleItem(id);
+    }, [])
 
     return (
         <div>

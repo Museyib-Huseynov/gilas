@@ -1,8 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {PageHeader} from '../components';
-import categories from '../data/categoriesList';
 import cities from '../data/cities';
+import axios from 'axios';
+import { useCategoriesContext } from '../context/categories_context';
 
 const NewAd = () => {
     const [category, setCategory] = useState('-- Siyahıdan seçin --');
@@ -17,12 +19,15 @@ const NewAd = () => {
     const [mobile, setMobile] = useState('');
     const [error, setError] = useState(true);
 
+    const {categories} = useCategoriesContext();
+    let history = useHistory();
     const fileInputRef = useRef(null);
 
     useEffect(() => {
         const input = fileInputRef.current;
         const handleSelect = () => {
-            const selected =  [...input.files];
+            let selected =  [...input.files];
+            selected = selected.filter((file) => file.size < 1024000);
             setSelectedImages([...selectedImages, ...selected]);
             input.value = null;
         };
@@ -106,7 +111,33 @@ const NewAd = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('form submitted');
+        const bodyFormData = new FormData();
+        bodyFormData.append('category_id', category);
+        bodyFormData.append('title', adName);
+        bodyFormData.append('price', Number(price));
+        bodyFormData.append('description', description);
+        bodyFormData.append('full_name', name);
+        bodyFormData.append('phone_number', mobile);
+        bodyFormData.append('renting_type', "WEEKLY");    
+        selectedImages.forEach((image_file) => {
+            bodyFormData.append('images[]', image_file);
+        });
+
+        axios({
+            method: "post",
+            url: "https://gilas.hymeria.com/api/v1/store",
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data"},
+        })
+        .then((response) => {
+            console.log(response)
+           if (response.data.code === 201) {
+                history.push('/formsuccess');
+           }
+        })
+        .catch((response) => {
+            console.log(response)
+        })
     }
 
     return (
@@ -119,10 +150,10 @@ const NewAd = () => {
                     <label htmlFor='category' className='label'>Kateqoriya</label>
                     <select id='category' className='input' name='category' value={category} onChange={handleChange}>
                         <option >-- Siyahıdan seçin --</option>
-                        {categories.map((category, index) => {
+                        {categories.map((category) => {
                             return (
-                                <option key={index} value={category.name}>
-                                    {category.name}
+                                <option key={category.id} value={category.id}>
+                                    {category.title}
                                 </option>
                             );
                         })}
@@ -199,6 +230,7 @@ const NewAd = () => {
                         multiple 
                         hidden
                     />
+                    <p className='imgSizeLimit' style={{fontSize: '0.8rem'}}>Şəkilin ölçüsü 1024kb-dan az olmalıdır.</p>
                 </div>
                 {/* show selected images */}
                 {selectedImages.length !== 0 && 
@@ -209,7 +241,7 @@ const NewAd = () => {
                                 <div key={index} className='selected-img-container'>
                                     <img  src={path} alt={selectedImage.name} className='selected-img' />
                                     <button type='button' className='selected-img-remove' onClick={()=>handleCancel(index)}>
-                                        remove
+                                        Sil
                                     </button>
                                 </div>
                             );
@@ -375,6 +407,10 @@ textarea {
     cursor: pointer;
 }
 
+.imgSizeLimit {
+    grid-column-start: 2;
+}
+
 .contact {
     justify-self: center;
     font-weight: 600;
@@ -437,6 +473,10 @@ textarea {
     }
 
     .error-msg {
+        grid-column-start: 1;
+    }
+
+    .imgSizeLimit {
         grid-column-start: 1;
     }
 }    

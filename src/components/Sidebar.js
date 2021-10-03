@@ -35,7 +35,6 @@ const Sidebar = () => {
         dispatch({type: CLEAR_FILTERS});
         if (text !== '') {
             dispatch({type: UPDATE_FILTERS, payload: {name: 'text', value: text.toLowerCase()}});
-            setText('');
             setIsSearchActive(false);
             history.push('/products');
         }
@@ -55,7 +54,13 @@ const Sidebar = () => {
         <SidebarContainer>
             {/* header start */}
             <div className='header'>
-                <Link to='/' className='logo-container'>
+                <Link to='/' 
+                    className='logo-container' 
+                    onClick={() => {
+                        dispatch({type: CLEAR_FILTERS})
+                        setText('');
+                    }}
+                >
                     <img src={logo} alt='logo'  className='logo'/>
                 </Link>    
                 <button 
@@ -95,7 +100,15 @@ const Sidebar = () => {
 
             <div className='toggle-menu-container' ref={linksContainerRef}>
                 <div className='toggle-menu' ref={linksRef} >
-                    <NavLink to='/products' className='link' activeClassName='active-link' onClick={() => setIsMenuActive(false)}>
+                    <NavLink 
+                        to='/products' 
+                        className='link' 
+                        activeClassName='active-link' 
+                        onClick={() => {
+                            setIsMenuActive(false);
+                            dispatch({type: CLEAR_FILTERS});
+                            setText('');
+                        }}>
                         <BsCollectionFill style={{margin: '0 1rem'}}/> İcarəyə Götür
                     </NavLink>
                     <Link to='/newad' className='link' onClick={() => setIsMenuActive(false)}>
@@ -116,7 +129,7 @@ const SidebarContainer = styled.div`
 
     .header {
         display: grid;
-        grid-template-columns: 10rem repeat(4, 1fr);
+        grid-template-columns: 10rem repeat(6, 1fr);
         height: 4rem;
         background: rgba(255,255,255, 1);
         position: relative;
@@ -150,11 +163,11 @@ const SidebarContainer = styled.div`
         outline: none;
     }
     .toggle-search-btn {
-        grid-area: 1 / 4 / 2 / 5;
+        grid-area: 1 / 6 / 2 / 7;
         justify-self: end;
     }
     .toggle-menu-btn {
-        grid-area: 1 / 5 / 2 / 6;
+        grid-area: 1 / 7 / 2 / 8;
         justify-self: center;
     }
     .rotate {

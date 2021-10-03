@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import {ScrollToTop, Navbar, Sidebar, Footer} from './components';
-import {Home, About, Login, Signup, SingleProduct, NewAd, Products} from './pages';
+import {Home, About, Login, Signup, SingleProduct, NewAd, Products, FormSuccess} from './pages';
 
 function App() {
   return (
@@ -35,6 +35,9 @@ function App() {
           </Route>
           <Route exact path='/newad'>
             <NewAd />
+          </Route>
+          <Route exact path='/formsuccess'>
+            <FormSuccess />
           </Route>
         </Switch>
         <Footer/>

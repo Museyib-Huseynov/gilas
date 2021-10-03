@@ -57,7 +57,7 @@ const ProductImagesGallery = ({images=[]}) => {
             </div>}
             
             {(slideLeft !== '0px' && countRight !== 0) &&
-                <div className='slideLeft' onClick={handleSlideLeft}>&lt;</div>
+                <div className='slide slideLeft' onClick={handleSlideLeft}>&lt;</div>
             }
             <div className='gallery-container'>
                 <div className='gallery' ref={slideRef}>
@@ -78,7 +78,7 @@ const ProductImagesGallery = ({images=[]}) => {
                 </div>
             </div>
             {(images.length > 5 && countRight < (images.length - 5)) &&
-                <div className='slideRight' onClick={handleSlideRight}>&gt;</div>
+                <div className='slide slideRight' onClick={handleSlideRight}>&gt;</div>
             }       
         </ProductImagesGalleryContainer>
     );
