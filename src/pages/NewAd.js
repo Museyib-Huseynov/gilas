@@ -5,6 +5,7 @@ import {PageHeader} from '../components';
 import cities from '../data/cities';
 import axios from 'axios';
 import { useCategoriesContext } from '../context/categories_context';
+import ReactLoading from 'react-loading';
 
 const NewAd = () => {
     const [category, setCategory] = useState('-- Siyahıdan seçin --');
@@ -19,6 +20,8 @@ const NewAd = () => {
     const [mobile, setMobile] = useState('');
     const [error, setError] = useState(true);
 
+    const [loading, setLoading] = useState(false);
+
     const {categories} = useCategoriesContext();
     let history = useHistory();
     const fileInputRef = useRef(null);
@@ -27,12 +30,12 @@ const NewAd = () => {
         const input = fileInputRef.current;
         const handleSelect = () => {
             let selected =  [...input.files];
-            selected = selected.filter((file) => file.size < 1024000);
+            selected = selected.filter((file) => file.size < 3096000);
             setSelectedImages([...selectedImages, ...selected]);
             input.value = null;
         };
-        input.addEventListener('change', handleSelect);
-        return () => input.removeEventListener('change', handleSelect);
+        input?.addEventListener('change', handleSelect);
+        return () => input?.removeEventListener('change', handleSelect);
     });
 
     useEffect(() => {
@@ -110,6 +113,7 @@ const NewAd = () => {
     }   
     
     const handleSubmit = (e) => {
+        setLoading(true);
         e.preventDefault();
         const bodyFormData = new FormData();
         bodyFormData.append('category_id', category);
@@ -140,6 +144,15 @@ const NewAd = () => {
         })
     }
 
+    if (loading) {
+        return (<ReactLoading 
+            type={'spinningBubbles'} 
+            color={'#03b8f4'} 
+            width={'150px'} 
+            height={'150px'}
+            className='loading' 
+        />)
+    }
     return (
         <NewAdContainer>
             <PageHeader title='İcarəyə ver' />
@@ -230,7 +243,7 @@ const NewAd = () => {
                         multiple 
                         hidden
                     />
-                    <p className='imgSizeLimit' style={{fontSize: '0.8rem'}}>Şəkilin ölçüsü 1024kb-dan az olmalıdır.</p>
+                    <p className='imgSizeLimit' style={{fontSize: '0.8rem'}}>Şəkilin ölçüsü 3096kb-dan çox olmamalıdır.</p>
                 </div>
                 {/* show selected images */}
                 {selectedImages.length !== 0 && 

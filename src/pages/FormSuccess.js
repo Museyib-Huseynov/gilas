@@ -1,15 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
+import { useProductsContext } from '../context/products_context';
 
 const FormSuccess = () => {
     let history = useHistory();
+    const {fetchItems} = useProductsContext();
     return (
         <FormSuccessContainer>
             <h1>Sizin elanınız yoxlanıldıqdan sonra sayta yerləşdiriləcəkdir</h1>
             <div>
-            <button onClick={() => {history.push('/')}} target='_blank'>Əsas səhifə</button>
-            <button onClick={() => {history.push('/newad')}}>Yeni elan yerləşdir</button>
+            <button onClick={() => {
+                fetchItems();
+                history.push('/');
+            }}>
+                Əsas səhifə
+            </button>
+            <button onClick={() => {history.push('/newad')}}>
+                Yeni elan yerləşdir
+            </button>
             </div>
         </FormSuccessContainer>
     );

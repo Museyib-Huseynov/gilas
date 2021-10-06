@@ -16,7 +16,7 @@ const Item = (props) => {
             <footer className='image-info'>
                 <p className='price'>{price} AZN</p>
                 <p className='name'>{title}</p>
-                <p className='date'>{full_name}, {renting_type}</p>
+                <p className='date'>{full_name}, Günlük</p>
             </footer>
         </ItemContainer>
     )
