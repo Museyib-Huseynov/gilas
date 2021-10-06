@@ -32,21 +32,18 @@ const NewAd = () => {
         const handleSelect = () => {
             let selected =  [...input.files];
             selected.map((img, index) => {
-                console.log(selected[index].size);
                 new Compressor(img, {
                     quality: 0.1,
                     success: (compressedResult) => {
-                        if (selected[index].size > 1000000) {
+                        if (selected[index]?.size > 1000000) {
                             selected[index] = compressedResult;
                         }
-                        console.log(selected[index].size);
-                        selected = selected.filter((file) => file.size < 3096000);
+                        // selected = selected.filter((file) => file.size < 3096000);
                         setSelectedImages([...selectedImages, ...selected]);
                         input.value = null;
                     },
                 });
             });
-            
         };
         input?.addEventListener('change', handleSelect);
         return () => input?.removeEventListener('change', handleSelect);
