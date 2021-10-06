@@ -36,7 +36,9 @@ const NewAd = () => {
                 new Compressor(img, {
                     quality: 0.1,
                     success: (compressedResult) => {
-                        selected[index] = compressedResult;
+                        if (selected[index].size > 1000000) {
+                            selected[index] = compressedResult;
+                        }
                         console.log(selected[index].size);
                         selected = selected.filter((file) => file.size < 3096000);
                         setSelectedImages([...selectedImages, ...selected]);
@@ -146,7 +148,7 @@ const NewAd = () => {
             headers: { "Content-Type": "multipart/form-data"},
         })
         .then((response) => {
-            console.log(response)
+            // console.log(response)
            if (response.data.code === 201) {
                 history.push('/formsuccess');
            }
