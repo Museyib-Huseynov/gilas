@@ -6,6 +6,7 @@ import cities from '../data/cities';
 import axios from 'axios';
 import { useCategoriesContext } from '../context/categories_context';
 import ReactLoading from 'react-loading';
+import Compressor from 'compressorjs';
 
 const NewAd = () => {
     const [category, setCategory] = useState('-- Siyahıdan seçin --');
@@ -30,9 +31,20 @@ const NewAd = () => {
         const input = fileInputRef.current;
         const handleSelect = () => {
             let selected =  [...input.files];
-            selected = selected.filter((file) => file.size < 3096000);
-            setSelectedImages([...selectedImages, ...selected]);
-            input.value = null;
+            selected.map((img, index) => {
+                console.log(selected[index].size);
+                new Compressor(img, {
+                    quality: 0.1,
+                    success: (compressedResult) => {
+                        selected[index] = compressedResult;
+                        console.log(selected[index].size);
+                        selected = selected.filter((file) => file.size < 3096000);
+                        setSelectedImages([...selectedImages, ...selected]);
+                        input.value = null;
+                    },
+                });
+            });
+            
         };
         input?.addEventListener('change', handleSelect);
         return () => input?.removeEventListener('change', handleSelect);
