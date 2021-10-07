@@ -35,7 +35,7 @@ const NewAd = () => {
                 new Compressor(img, {
                     quality: 0.1,
                     success: (compressedResult) => {
-                        if (selected[index]?.size > 1000000) {
+                        if (selected[index]?.size > 350000) {
                             selected[index] = compressedResult;
                         }
                         // selected = selected.filter((file) => file.size < 3096000);
