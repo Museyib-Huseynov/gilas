@@ -4,9 +4,11 @@ import {Category, Error} from '.';
 import { useCategoriesContext } from '../context/categories_context';
 import ReactLoading from 'react-loading';
 import * as icons from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Categories = () => {
     const {categories, categories_loading, categories_error} = useCategoriesContext();
+    const {t, i18n} = useTranslation();
     return (
         <CategoriesContainer>
             {categories_loading ? 
@@ -14,7 +16,7 @@ const Categories = () => {
             categories_error ?
             <Error /> :
             <>
-                <h1>Bütün Kateqoriyalar</h1>
+                <h1>{t('Bütün Kateqoriyalar')}</h1>
                 <div className='container'>
                     {categories.map((category) => {
                         const {id, title, icon} = category;

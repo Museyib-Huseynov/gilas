@@ -6,9 +6,11 @@ import logo from '../Logo-1.svg';
 import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS, CLEAR_FILTERS } from '../actions';
+import ReactCountryFlag from "react-country-flag";
 
 const Navbar = () => {
     const [text, setText] = useState('');
+    const [language, setLanguage] = useState('AZ');
     const {fetchItems} = useProductsContext();
     const {dispatch, filterAndSortProducts} = useFilterContext();
     let history = useHistory();
@@ -70,6 +72,23 @@ const Navbar = () => {
 
                     </div>
                     {/* navlinks end */}
+
+                    {/* select language start */}
+                    <div className='flag'>
+                        <ReactCountryFlag 
+                            countryCode={language} 
+                            svg
+                            style={{
+                                fontSize: '1.5em'
+                            }}
+                        />
+                    </div>
+                    <select className='language' value={language} onChange={(e) => {setLanguage(e.target.value)}}>
+                        <option value='AZ'>AZ</option>
+                        <option value='GB'>EN</option>
+                        <option value='RU'>RU</option>
+                    </select>
+                    {/* select language end */}
                 </div>
                 
         </NavContainer>
@@ -83,10 +102,14 @@ const NavContainer = styled.nav`
     height: 7rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
     user-select: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #fff;
 
     .search-and-nav {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 0.2fr 0.2fr;
         grid-template-rows: 1fr 0.8fr;
     }
 
@@ -212,6 +235,27 @@ const NavContainer = styled.nav`
     }
     // ** navlinks end **
 
+    .flag {
+        width: 50%;
+        height: auto;
+        grid-area: 1 / 3 / 3 / 4 ;
+        text-align: center;
+        justify-self: end;
+        align-self: center;
+    }
+
+    .language {
+        width: auto;
+        height: auto;
+        grid-area: 1 / 4 / 3 / 5 ;
+        border: none;
+        outline: none;
+        appearance: none;
+        text-align: center;
+        justify-self: start;
+        align-self: center;
+    }
+
     @media screen and (max-width: 1120px) {
         .form-search {
             grid-area: 2 / 1 / 3 / 3;
@@ -219,6 +263,10 @@ const NavContainer = styled.nav`
 
         .nav-links {
             grid-area: 1 / 1 / 2 / 3;
+        }
+
+        .flag {
+            justify-self: center;
         }
     }
 
