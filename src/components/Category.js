@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { useHistory} from 'react-router-dom';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS } from '../actions';
+import { useTranslation } from 'react-i18next';
 
 const Category = (props) => {
     const {name, id, Icon} = props;
     const {dispatch} = useFilterContext();
     const history = useHistory();
 
+    const {t, i18n} = useTranslation();
 
     const handleClick = () => {
         dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
@@ -17,7 +19,8 @@ const Category = (props) => {
     return (
         <CategoryContainer onClick={handleClick}>
             <Icon className='icon'/>
-            <p>{name}</p>
+            {/* <p>{name}</p> */}
+            <p>{t(`${name}`)}</p>
         </CategoryContainer>
     )
 };

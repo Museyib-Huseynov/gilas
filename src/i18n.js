@@ -4,7 +4,8 @@ import { initReactI18next } from "react-i18next";
 const resources = {
     en: {
         translation: {
-            "Bütün Kateqoriyalar": "All categories"
+            "Bütün Kateqoriyalar": "All categories",
+            "Alətlər": "Tools",
         }
     },
     ru: {
@@ -18,7 +19,7 @@ i18n
 .use(initReactI18next)
 .init({
     resources,
-    lng: "ru",
+    lng: "en",
     interpolation: {
         escapeValue: false
     }
