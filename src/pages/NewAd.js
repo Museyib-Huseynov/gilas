@@ -446,7 +446,8 @@ textarea {
 }
 
 .submit-btn {
-    width: 150px;
+    width: auto;
+    padding: 0 10px;
     height: 35px;
     font-size: 1.1rem;
     justify-self: center;

@@ -37,7 +37,7 @@ const ge = {
     "Hamısı": "ყველა",
     "Qiymət": "ფასი",
     "Filtiri təmizlə": "გაასუფთავეთ ფილტრები",
-    "Yeni elan yerləşdir": "განათავსეთ ახალი რეკლამა",
+    "Yeni elan yerləşdir": "ახალი რეკლამა",
     "Siyahıdan seçin": "აირჩიეთ სიიდან",
     "Şəhər": "ქალაქი",
     "Məzmun": "აღწერა",

@@ -122,7 +122,7 @@ const Sidebar = () => {
                 <AiOutlineSearch className='icon' />
                 <input 
                     type='text' 
-                    placeholder='Məhsulu axtarın..' 
+                    placeholder={t('Məhsulu axtarın..' )}
                     className='form-input' 
                     value={text}
                     onChange={(e) => setText(e.target.value)}    
