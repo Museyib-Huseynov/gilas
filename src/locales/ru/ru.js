@@ -25,7 +25,7 @@ const ru = {
     "İcarəyə götür": "Арендовать",
     "İCARƏYƏ VER": "ДОБАВИТЬ",
     "İcarəyə ver": "Разместите предмет",
-    "Hamısına Bax": "See All",
+    "Hamısına Bax": "Увидеть все",
     "Bizi izləyin": "Подписывайтесь на нас",
     "Bütün hüquqlar qorunur": "Все права защищены",
     "Günlük": "Ежедневно",
@@ -53,6 +53,7 @@ const ru = {
     "Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı": 
     "Извините, по выбранным вами критериям результатов не найдено",
     "Ətraflı Bax": "Смотрите подробности",
+    "Axtar": "Поиск",    
 };
 
 export default ru;

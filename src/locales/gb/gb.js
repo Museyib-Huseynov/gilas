@@ -53,6 +53,7 @@ const gb = {
     "Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı": 
     "Sorry, no products matching your search criteria were found",
     "Ətraflı Bax": "See details",
+    "Axtar": "Search",
 };
 
 export default gb;

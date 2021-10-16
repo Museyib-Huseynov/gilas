@@ -50,6 +50,7 @@ const ge = {
     "Mobil nömrə": "მობილიზება",
     "Elanı yerləşdir": "განათავსეთ რეკლამა",
     "Ətraflı Bax": "Იხილეთ დეტალები",
+    "Axtar": "ძებნა",   
 };
 
 export default ge;

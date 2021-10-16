@@ -25,7 +25,7 @@ const Sidebar = () => {
     const linksContainerRef = useRef(null);
     const linksRef = useRef(null);
 
-    const {i18n} = useTranslation();
+    const {t, i18n} = useTranslation();
 
     useEffect(() => {
         const linksHeight = linksRef.current.getBoundingClientRect().height;
@@ -127,7 +127,7 @@ const Sidebar = () => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}    
                 />
-                <button type='submit'>Search</button>
+                <button type='submit'>{t('Axtar')}</button>
             </form>
             {/* header-search end */}
 
@@ -145,10 +145,10 @@ const Sidebar = () => {
                                 filterAndSortProducts();
                             }
                         }}>
-                        <BsCollectionFill style={{margin: '0 1rem'}}/> İcarəyə Götür
+                        <BsCollectionFill style={{margin: '0 1rem'}}/> {t('İcarəyə götür')}
                     </NavLink>
                     <Link to='/newad' className='link' onClick={() => setIsMenuActive(false)}>
-                        <FaAdversal style={{margin: '0 1rem'}}/> İcarəyə Ver
+                        <FaAdversal style={{margin: '0 1rem'}}/> {t('İcarəyə ver')}
                     </Link>
                 </div>
             </div>
