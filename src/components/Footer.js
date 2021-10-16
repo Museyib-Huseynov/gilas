@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaFacebook, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+    const {t} = useTranslation();
     return (
         <FooterContainer>
             <h2>
-                Bizi izləyin <br/>
+                {t('Bizi izləyin')} <br/>
                 <a href='https://www.facebook.com' target='_blank' rel="noreferrer">
                     <FaFacebook className='icon' style={{color: '#4267B2'}}/>
                 </a>
@@ -22,8 +24,8 @@ const Footer = () => {
             </h2>
             <h4>
                 &copy; {new Date().getFullYear()}
-                <span> Gilas Rent </span>
-                Bütün hüquqlar qorunur
+                <span> Gilas </span>
+                {t('Bütün hüquqlar qorunur')}
             </h4>
         </FooterContainer>
     );

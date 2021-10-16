@@ -10,7 +10,7 @@ const Category = (props) => {
     const {dispatch} = useFilterContext();
     const history = useHistory();
 
-    const {t, i18n} = useTranslation();
+    const {t} = useTranslation();
 
     const handleClick = () => {
         dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
@@ -19,7 +19,6 @@ const Category = (props) => {
     return (
         <CategoryContainer onClick={handleClick}>
             <Icon className='icon'/>
-            {/* <p>{name}</p> */}
             <p>{t(`${name}`)}</p>
         </CategoryContainer>
     )

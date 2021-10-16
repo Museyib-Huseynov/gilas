@@ -1,17 +1,18 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import gb from "./locales/gb/gb";
+import ru from "./locales/ru/ru";
+import ge from "./locales/ge/ge";
 
 const resources = {
-    en: {
-        translation: {
-            "Bütün Kateqoriyalar": "All categories",
-            "Alətlər": "Tools",
-        }
+    gb: {
+        translation: gb
     },
     ru: {
-        translation: {
-            "Bütün Kateqoriyalar": "Vse kateqori"
-        }
+        translation: ru
+    },
+    ge: {
+        translation: ge
     }
 }
 
@@ -19,7 +20,7 @@ i18n
 .use(initReactI18next)
 .init({
     resources,
-    lng: "en",
+    lng: "az",
     interpolation: {
         escapeValue: false
     }

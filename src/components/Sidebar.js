@@ -8,11 +8,14 @@ import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS, CLEAR_FILTERS } from '../actions';
 import logo from '../Logo-1.svg';
+import ReactCountryFlag from "react-country-flag";
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
     const [isSearchActive, setIsSearchActive] = useState(false);
     const [isMenuActive, setIsMenuActive] = useState(false);
     const [text, setText] = useState('');
+    const [language, setLanguage] = useState('AZ');
 
     const {fetchItems} = useProductsContext();
     const {dispatch, filterAndSortProducts} = useFilterContext();
@@ -21,6 +24,8 @@ const Sidebar = () => {
 
     const linksContainerRef = useRef(null);
     const linksRef = useRef(null);
+
+    const {i18n} = useTranslation();
 
     useEffect(() => {
         const linksHeight = linksRef.current.getBoundingClientRect().height;
@@ -67,6 +72,30 @@ const Sidebar = () => {
                 >
                     <img src={logo} alt='logo'  className='logo'/>
                 </Link>    
+                {/* select language start */}
+                <div className='flag'>
+                    <ReactCountryFlag 
+                        countryCode={language} 
+                        svg
+                        style={{
+                            fontSize: '1.8em'
+                        }}
+                    />
+                </div>
+                <select 
+                    className='language' 
+                    value={language} 
+                    onChange={(e) => {
+                        setLanguage(e.target.value);
+                        i18n.changeLanguage(e.target.value);
+                    }}
+                >
+                    <option value='az'>AZ</option>
+                    <option value='gb'>EN</option>
+                    <option value='ru'>RU</option>
+                    <option value='ge'>GE</option>
+                </select>
+                {/* select language end */}
                 <button 
                     type='button' 
                     className='toggle-search-btn'
@@ -243,7 +272,27 @@ const SidebarContainer = styled.div`
     hr {
         border: none;
         border-top: 1px solid hsl(210, 31%, 80%);
-      }
+    }
+
+    .flag {
+        grid-area: 1 / 3 / 2 / 4 ;
+        text-align: center;
+        justify-self: end;
+        align-self: center;
+    }
+
+    .language {
+        width: 50px;
+        height: 20px;
+        font-size: 1rem;
+        grid-area: 1 / 4 / 2 / 5 ;
+        border: none;
+        outline: none;
+        // appearance: none;
+        text-align: center;
+        justify-self: start;
+        align-self: center;
+    }
 
     @media screen and (max-width: 800px) {
         display: initial;

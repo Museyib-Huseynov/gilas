@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { useFilterContext } from '../context/filter_context';
 import { CLEAR_FILTERS } from '../actions';
 import { useProductsContext } from '../context/products_context';
+import { useTranslation } from 'react-i18next';
 
 const PageHeader = ({title, product}) => {
     const {fetchItems} = useProductsContext();
     const {dispatch} = useFilterContext();
+    const {t} = useTranslation();
     return (
         <PageHeaderContainer>
             <h3>
@@ -15,7 +17,7 @@ const PageHeader = ({title, product}) => {
                     dispatch({type: CLEAR_FILTERS});
                     fetchItems();
                 }}>
-                    Əsas səhifə&#160;  
+                    {t('Əsas səhifə')}&#160;  
                 </Link>
                 {product && 
                 <Link to='/products'
@@ -23,10 +25,10 @@ const PageHeader = ({title, product}) => {
                         dispatch({type: CLEAR_FILTERS});
                     }}
                 >
-                    / İcarəyə götür 
+                    / {t('İcarəyə götür')}&#160;
                 </Link>
                 }
-                / {title}
+                / {t(`${title}`)}
             </h3>
         </PageHeaderContainer>
     );

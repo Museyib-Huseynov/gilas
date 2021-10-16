@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
 import { useFilterContext } from '../context/filter_context';
+import { useTranslation } from 'react-i18next';
 
 const Sort = () => {
     const {gridView, setGridView, setListView, updateSort, filtered_products} = useFilterContext();
+    const {t} = useTranslation();
     return (
         <SortContainer>
             <div className='btn-container'>
@@ -23,18 +25,18 @@ const Sort = () => {
                     <BsList/>
                 </button>
             </div>
-            <p>{filtered_products.length} məhsul tapıldı</p>
+            <p>{filtered_products.length} {t('məhsul tapıldı')}</p>
             <hr />
             <form>
-                <label htmlFor='sort'>Çeşidlə</label>
+                <label htmlFor='sort'>{t('Çeşidlə')}</label>
                 <select
                     id='sort'
                     name='sort'
                     className='sort-input'
                     onChange={updateSort}
                 >
-                    <option value='asc'>Qiymətə görə (əvvəlcə ucuz)</option>
-                    <option value='desc'>Qiymətə görə (əvvəlcə bahalı)</option>
+                    <option value='asc'>{t('Qiymətə görə (əvvəlcə ucuz)')}</option>
+                    <option value='desc'>{t('Qiymətə görə (əvvəlcə bahalı)')}</option>
                 </select>
             </form>
         </SortContainer>

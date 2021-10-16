@@ -7,12 +7,15 @@ import { UPDATE_FILTERS } from '../actions';
 import { useCategoriesContext } from '../context/categories_context';
 import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
+import { useTranslation } from 'react-i18next';
 
 const ItemsList = () => {
     const {categories} = useCategoriesContext();
     const {items, items_loading} = useProductsContext();
     const {dispatch} = useFilterContext();
     let history = useHistory();
+
+    const {t} = useTranslation();
 
     const handleClick = (id) => {
         dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
@@ -37,9 +40,9 @@ const ItemsList = () => {
                 return (
                     <ItemsListContainer key={id}>
                         <h2>
-                            {title} 
+                            {t(`${title}`)}
                             <span className='see-all' onClick={() => {handleClick(id)}}>
-                                Hamısına Bax
+                                {t('Hamısına Bax')}
                             </span>
                         </h2>
                         <Items items={itemsPerCategoryArray}/>

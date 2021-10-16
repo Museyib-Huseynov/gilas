@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useCategoriesContext } from '../context/categories_context';
 import ReactLoading from 'react-loading';
 import Compressor from 'compressorjs';
+import { useTranslation } from 'react-i18next';
 
 const NewAd = () => {
     const [category, setCategory] = useState('-- Siyahıdan seçin --');
@@ -26,6 +27,8 @@ const NewAd = () => {
     const {categories} = useCategoriesContext();
     let history = useHistory();
     const fileInputRef = useRef(null);
+
+    const {t} = useTranslation();
 
     useEffect(() => {
         const input = fileInputRef.current;
@@ -167,13 +170,13 @@ const NewAd = () => {
     return (
         <NewAdContainer>
             <PageHeader title='İcarəyə ver' />
-            <h1>Yeni elan yerləşdir</h1>
+            <h1>{t('Yeni elan yerləşdir')}</h1>
             <form className='form' autoComplete='off' onSubmit={handleSubmit}>
                 {/* choose a category */}
                 <div className='form-input'>
-                    <label htmlFor='category' className='label'>Kateqoriya</label>
+                    <label htmlFor='category' className='label'>{t('Kateqoriya')}</label>
                     <select id='category' className='input' name='category' value={category} onChange={handleChange}>
-                        <option >-- Siyahıdan seçin --</option>
+                        <option >-- {t('Siyahıdan seçin')} --</option>
                         {categories.map((category) => {
                             return (
                                 <option key={category.id} value={category.id}>
@@ -199,7 +202,7 @@ const NewAd = () => {
                 }                
                 {/* choose your city */}
                 <div className='form-input'>
-                    <label htmlFor='city' className='label'>Şəhər</label>
+                    <label htmlFor='city' className='label'>{t('Şəhər')}</label>
                     <select id='city' className='input' name='city' value={city} onChange={handleChange}>
                         {cities.map((city, index) => {
                             return (
@@ -212,7 +215,7 @@ const NewAd = () => {
                 </div>
                 {/* enter the price */}
                 <div className='form-input'>
-                    <label htmlFor='price' className='label'>Qiymət, AZN</label>
+                    <label htmlFor='price' className='label'>{t('Qiymət')}, AZN</label>
                     <div>
                          <input 
                             type='number' 
@@ -229,7 +232,7 @@ const NewAd = () => {
                 </div>
                 {/* description */}
                 <div className='form-input'>
-                    <label htmlFor='description' className='label' style={{alignSelf: 'start'}}>Məzmun</label>
+                    <label htmlFor='description' className='label' style={{alignSelf: 'start'}}>{t('Məzmun')}</label>
                     <div>
                         <textarea 
                             id='description' 
@@ -238,13 +241,13 @@ const NewAd = () => {
                             value={description} 
                             onChange={handleChange}
                         /> 
-                        <p style={{fontSize: '0.8rem'}}>{descriptionCount} simvol qalıb</p>
+                        <p style={{fontSize: '0.8rem'}}>{descriptionCount} {t('simvol qalıb')}</p>
                     </div>            
                 </div>
                 {/* add images */}
                 <div className='form-input'>
-                    <div className='label'>Şəkillər</div>
-                    <label htmlFor='image' className='file-btn'>Şəkil əlavə et</label>
+                    <div className='label'>{t('Şəkillər')}</div>
+                    <label htmlFor='image' className='file-btn'>{t('Şəkil əlavə et')}</label>
                     <input 
                         type='file' 
                         id='image' 
@@ -254,7 +257,7 @@ const NewAd = () => {
                         multiple 
                         hidden
                     />
-                    <p className='imgSizeLimit' style={{fontSize: '0.8rem'}}>Şəkilin ölçüsü 3096kb-dan çox olmamalıdır.</p>
+                    <p className='imgSizeLimit' style={{fontSize: '0.8rem'}}>{t('Şəkilin ölçüsü 3096kb-dan çox olmamalıdır.')}</p>
                 </div>
                 {/* show selected images */}
                 {selectedImages.length !== 0 && 
@@ -274,11 +277,11 @@ const NewAd = () => {
                 }         
                {/* contact info */}
                 <div className='contact'>
-                    <p>Əlaqə məlumatları</p>
+                    <p>{t('Əlaqə məlumatları')}</p>
                 </div>
                 {/* enter your name */}
                 <div className='form-input'>
-                    <label htmlFor='name' className='label'>Adınız</label>
+                    <label htmlFor='name' className='label'>{t('Adınız')}</label>
                     <input 
                         type='text' 
                         id='name' 
@@ -303,7 +306,7 @@ const NewAd = () => {
                 </div>
                 {/* enter your mobile number */}
                 <div className='form-input'>
-                    <label htmlFor='number' className='label'>Mobil nömrə</label>
+                    <label htmlFor='number' className='label'>{t('Mobil nömrə')}</label>
                     <input 
                         type='tel' 
                         id='number' 
@@ -319,7 +322,7 @@ const NewAd = () => {
                 <input 
                     type='submit' 
                     className='submit-btn' 
-                    value='Elanı yerləşdir' 
+                    value={t('Elanı yerləşdir')} 
                     disabled={error}
                 />
             </form>

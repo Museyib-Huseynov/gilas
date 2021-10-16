@@ -7,6 +7,7 @@ import { useProductsContext } from '../context/products_context';
 import { useFilterContext } from '../context/filter_context';
 import { UPDATE_FILTERS, CLEAR_FILTERS } from '../actions';
 import ReactCountryFlag from "react-country-flag";
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
     const [text, setText] = useState('');
@@ -15,6 +16,8 @@ const Navbar = () => {
     const {dispatch, filterAndSortProducts} = useFilterContext();
     let history = useHistory();
     let location = useLocation();
+
+    const {t, i18n} = useTranslation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,7 +47,7 @@ const Navbar = () => {
                     <form onSubmit={handleSubmit} className='form-search'>
                         <input 
                             type='text' 
-                            placeholder='Məhsulu axtarın..' 
+                            placeholder={t('Məhsulu axtarın..')}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         />
@@ -67,8 +70,14 @@ const Navbar = () => {
                                     filterAndSortProducts();
                                 }
                             }}
+                            data-content-one={t("İCARƏYƏ GÖTÜR")}
                         />
-                        <NavLink to='/newad' className='link2' activeClassName='active' />
+                        <NavLink 
+                            to='/newad' 
+                            className='link2' 
+                            activeClassName='active'
+                            data-content-two={t("İCARƏYƏ VER")}
+                        />
 
                     </div>
                     {/* navlinks end */}
@@ -79,14 +88,22 @@ const Navbar = () => {
                             countryCode={language} 
                             svg
                             style={{
-                                fontSize: '1.5em'
+                                fontSize: '1.8em'
                             }}
                         />
                     </div>
-                    <select className='language' value={language} onChange={(e) => {setLanguage(e.target.value)}}>
-                        <option value='AZ'>AZ</option>
-                        <option value='GB'>EN</option>
-                        <option value='RU'>RU</option>
+                    <select 
+                        className='language' 
+                        value={language} 
+                        onChange={(e) => {
+                            setLanguage(e.target.value);
+                            i18n.changeLanguage(e.target.value);
+                        }}
+                    >
+                        <option value='az'>AZ</option>
+                        <option value='gb'>EN</option>
+                        <option value='ru'>RU</option>
+                        <option value='ge'>GE</option>
                     </select>
                     {/* select language end */}
                 </div>
@@ -109,7 +126,7 @@ const NavContainer = styled.nav`
 
     .search-and-nav {
         display: grid;
-        grid-template-columns: 1fr 1fr 0.2fr 0.2fr;
+        grid-template-columns: 1fr 1fr 0.1fr 80px;
         grid-template-rows: 1fr 0.8fr;
     }
 
@@ -213,12 +230,12 @@ const NavContainer = styled.nav`
     }
 
     .link1::after {
-        content: 'İCARƏYƏ GÖTÜR';
+        content: attr(data-content-one);
         border: none;
     }
 
     .link2::after {
-        content: 'İCARƏYƏ VER'
+        content: attr(data-content-two);
     }
 
     .link1:hover::after {
@@ -236,8 +253,6 @@ const NavContainer = styled.nav`
     // ** navlinks end **
 
     .flag {
-        width: 50%;
-        height: auto;
         grid-area: 1 / 3 / 3 / 4 ;
         text-align: center;
         justify-self: end;
@@ -245,28 +260,25 @@ const NavContainer = styled.nav`
     }
 
     .language {
-        width: auto;
-        height: auto;
+        width: 50px;
+        height: 20px;
+        font-size: 1rem;
         grid-area: 1 / 4 / 3 / 5 ;
         border: none;
         outline: none;
-        appearance: none;
+        // appearance: none;
         text-align: center;
         justify-self: start;
         align-self: center;
     }
 
-    @media screen and (max-width: 1120px) {
+    @media screen and (max-width: 1200px) {
         .form-search {
             grid-area: 2 / 1 / 3 / 3;
         }
 
         .nav-links {
             grid-area: 1 / 1 / 2 / 3;
-        }
-
-        .flag {
-            justify-self: center;
         }
     }
 

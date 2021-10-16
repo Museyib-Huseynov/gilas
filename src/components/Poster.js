@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import mainImage from '../poster.jpg'
-
+import { useTranslation } from 'react-i18next';
 
 const Poster = () => {
     const [width, setWidth] = useState(window.innerWidth);
-    
+    const {t} = useTranslation();
+
     // new Y  = (initial Y / original.height) * newHeight
     useEffect(() => {
         // original image size 5307 x 3317 => aspect ratio = 5307 / 3317 = 1.599
@@ -98,21 +99,21 @@ const Poster = () => {
 
             <div id='line1'></div>
             <div id='line1-text'>
-                <span className='line-text-span'>Çanta</span> <br/> 5 AZN / həftəlik
+                <span className='line-text-span'>{t('Çanta')}</span> <br/> {t('5 AZN / həftəlik')}
             </div>
 
             <div id='line2'></div>
             <div id='line2-text'>
-                <span className='line-text-span'>Velosiped</span> <br/> 20 AZN / həftəlik
+                <span className='line-text-span'>{t('Velosiped')}</span> <br/> {t('20 AZN / həftəlik')}
             </div>
 
             <div id='line3'></div>
             <div id='line3-text'>
-                <span className='line-text-span'>İdman Geyimi</span> <br/> 15 AZN / həftəlik
+                <span className='line-text-span'>{t('İdman Geyimi')}</span> <br/> {t('15 AZN / həftəlik')}
             </div>
 
             <div id='main-text'>
-                ALMA! <br /> <span className='main-text-span'>İCARƏYƏ GÖTÜR</span>
+            {t('ALMA!')} <br /> <span className='main-text-span'>{t('İCARƏYƏ GÖTÜR')}</span>
             </div>
         </PosterContainer>
     )

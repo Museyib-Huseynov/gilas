@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import { useFilterContext } from '../context/filter_context';
+import { useTranslation } from 'react-i18next';
 
 const ListView = ({products}) => {
     const {filtered_products_loading} = useFilterContext();
     const [count, setCount] = useState(400);
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (window.innerWidth < 1220) {
@@ -38,7 +40,7 @@ const ListView = ({products}) => {
                             <h5 className='price'>{price} AZN</h5>
                             <p>{description.substring(0, count)}...</p>
                             <Link to={`/products/${id}`} className='btn'>
-                                Ətraflı Bax
+                                {t('Ətraflı Bax')}
                             </Link>
                         </div>
                     </ListViewContainer>
@@ -46,7 +48,7 @@ const ListView = ({products}) => {
             })}
             {products.length < 1 && 
             <h3 style={{letterSpacing: '1px'}}>
-                Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı ...
+                {t('Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı')} ...
             </h3>}
         </>
     );
@@ -74,7 +76,7 @@ const ListViewContainer = styled.article`
 
     .btn {
         font-size: 0.8rem;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         background: #00C1FF;
         color: #fff;
         width: 100px;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useFilterContext } from '../context/filter_context';
 import { useCategoriesContext } from '../context/categories_context';
 import {DoubleRangeSlider} from '.';
+import { useTranslation } from 'react-i18next';
 
 const Filters = () => {
     const {categories} = useCategoriesContext();
@@ -15,6 +16,7 @@ const Filters = () => {
             min_price_limit},
         updateFilters,
         clearFilters} = useFilterContext();
+    const {t} = useTranslation();
     return (
         <FiltersContainer>
             <form>
@@ -23,12 +25,12 @@ const Filters = () => {
                     autoComplete='off'
                     name='text'
                     className='search-filter'
-                    placeholder='Məhsulu axtarın' 
+                    placeholder={t('Məhsulu axtarın')}
                     value={text}
                     onChange={updateFilters}
                 />
                 <div className='category-filter'>
-                    <h4>Kateqoriyalar</h4>
+                    <h4>{t('Kateqoriyalar')}</h4>
                     <button 
                         type='button'
                         name={'category'} 
@@ -37,7 +39,7 @@ const Filters = () => {
                           }`}
                           onClick={updateFilters}
                     >
-                        Hamısı
+                        {t('Hamısı')}
                     </button>
                     {categories.map((c) => {
                         return (
@@ -51,14 +53,14 @@ const Filters = () => {
                               }`}
                             onClick={updateFilters}
                         >
-                            {c.title}
+                            {t(`${c.title}`)}
                         </button>
                         );
                         
                     })}
                 </div>
                 <div className='price-filter'>
-                    <h4>Qiymət</h4>
+                    <h4>{t('Qiymət')}</h4>
                     <div className='min-max-container'>
                         <input 
                             type='number' 
@@ -86,7 +88,7 @@ const Filters = () => {
                     className='clear-filters'
                     onClick={clearFilters}
                 >
-                    Filtiri təmizlə
+                    {t('Filtiri təmizlə')}
                 </button>
             </form>
         </FiltersContainer>

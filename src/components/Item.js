@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Item = (props) => {
     // const {id, imgs, price, name, location, date} = props;
     const {id, images, price, title, full_name, renting_type} = props;
     
+    const {t} = useTranslation();
+
     let history = useHistory();
     const handleClick = () => {
         history.push(`/products/${id}`)
@@ -16,7 +19,7 @@ const Item = (props) => {
             <footer className='image-info'>
                 <p className='price'>{price} AZN</p>
                 <p className='name'>{title}</p>
-                <p className='date'>{full_name}, Günlük</p>
+                <p className='date'>{full_name}, {t('Günlük')}</p>
             </footer>
         </ItemContainer>
     )

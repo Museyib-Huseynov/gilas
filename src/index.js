@@ -5,7 +5,7 @@ import App from './App';
 import {FilterProvider} from './context/filter_context';
 import {ProductsProvider} from './context/products_context';
 import {CategoriesProvider} from './context/categories_context';
-import i18n from "./i18n";
+import "./i18n";
 
 ReactDOM.render(
   <React.StrictMode>

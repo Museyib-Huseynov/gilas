@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 const Categories = () => {
     const {categories, categories_loading, categories_error} = useCategoriesContext();
-    const {t, i18n} = useTranslation();
+    const {t} = useTranslation();
     return (
         <CategoriesContainer>
             {categories_loading ? 
