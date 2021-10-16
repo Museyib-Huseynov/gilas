@@ -49,6 +49,8 @@ const ge = {
     "Adınız": "სახელი",
     "Mobil nömrə": "მობილიზება",
     "Elanı yerləşdir": "განათავსეთ რეკლამა",
+    "Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı": 
+    "უკაცრავად, თქვენს მიერ არჩეული კრიტერიუმების შედეგები არ მოიძებნა",
     "Ətraflı Bax": "Იხილეთ დეტალები",
     "Axtar": "ძებნა",   
 };
