@@ -38,7 +38,7 @@ const ListView = ({products}) => {
                         <div className='info'>
                             <h3>{title}</h3>
                             <h5 className='price'>{price} AZN</h5>
-                            <p>{description.substring(0, count)}...</p>
+                            <p>{description.length < count ? description : description.substring(0, count)}...</p>
                             <Link to={`/products/${id}`} className='btn'>
                                 {t('Ətraflı Bax')}
                             </Link>
