@@ -1,18 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import {ProductImagesGallery, PageHeader} from '../components';
 import ReactLoading from 'react-loading';
 import { useProductsContext } from '../context/products_context';
+import { useTranslation } from 'react-i18next';
 
 const SingleProduct = () => {
+    const [daily, setDaily] = useState(true);
     const {single_item, single_item_loading, fetchSingleItem} = useProductsContext();
     const {images, title, price, description, category, full_name, phone_number} = single_item;
+
+    const {t} = useTranslation();
 
     let {id} = useParams();
     useEffect(() => {
         fetchSingleItem(id);
     }, [])
+
+    const day = price;
+    const weekly = (price * 7 * 0.85).toFixed(2);
 
     return (
         <div>
@@ -34,20 +41,31 @@ const SingleProduct = () => {
                             <ProductImagesGallery images={images}/>   
                             <section className='product-content'>
                                 <h2>{title}</h2>
-                                <h3 className='price'>{price} AZN</h3>
+                                <div className='grid-price'>
+                                    <p className='buy line'>{t('İcarə')}</p>
+                                    <p className='buy'>{t('Satış')}</p>
+                                    <div className='line'>
+                                        <select className='days' value={daily} onChange={(e)=>{setDaily(+e.target.value)}}>
+                                            <option value='1'>{t('Günlük')}</option>
+                                            <option value='0'>{t('Həftəlik')}</option>
+                                        </select>
+                                    </div>
+                                    <p className='price center'> 2 AZN </p>
+                                    <div className='line'><p className='price'>{daily ? day : weekly} AZN</p></div>
+                                </div>
                                 <p className='description'>{description}</p>
                                 <br/>
                                 <hr/>
                                 <p className='info'>
-                                    <span>Kateqoriya: </span>
+                                    <span>{t('Kateqoriya')}:</span>
                                     {category?.title}
                                 </p>
                                 <p className='info'>
-                                    <span>Məsul şəxs: </span>
+                                    <span>{t('Məsul şəxs')}:</span>
                                     {full_name}
                                 </p>
                                 <p className='info'>
-                                    <span>Mobil: </span>
+                                    <span>{t('Mobil')}:</span>
                                     {phone_number}
                                 </p>
                             </section>
@@ -103,9 +121,10 @@ const SingleProductContainer = styled.main`
             letter-spacing: 1px;
         };
         .price {
-            color: #00C1FF;
+            color: #000;
             letter-spacing: 1px;
             margin: 1rem 0;
+            font-weight: 700;
         }
 
         .description {
@@ -118,11 +137,49 @@ const SingleProductContainer = styled.main`
             width: 300px;
             margin: 2rem 0;
             display: grid;
-            grid-template-columns: 125px 1fr;
+            grid-template-columns: 150px 1fr;
             span {
               font-weight: 700;
             }
         }
+    }
+
+    .grid-price {
+        width: 200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .buy {
+        height: 100%;
+        font-weight: 600;
+        font-size: 1.1rem;
+        // border-top: 1px solid #000;
+    }
+
+    .center {
+        grid-area: 2 / 2 / 4 / 3;
+        font-size: 1.2rem;
+    }
+
+    .line {
+        height: 100%;
+        border-right: 2px solid 
+        #9a9a9a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .days {
+        text-align: center;
+        border: none;
+        outline: none;
+        font-size: 0.9rem;
+        font-weight: 0;
     }
 
     @media screen and (max-width: 800px) {

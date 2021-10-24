@@ -28,7 +28,7 @@ const ge = {
     "Hamısına Bax": "იხილეთ ყველა",
     "Bizi izləyin": "Მოგვყევი",
     "Bütün hüquqlar qorunur": "Ყველა უფლება დაცულია",
-    "Günlük": "ყოველდღიური",
+    "Günlük": "1 დღე",
     "Əsas səhifə": "საწყისი გვერდი",
     "məhsul tapıldı": "ნაპოვნია ნივთი",
     "Çeşidlə": "Დალაგება",
@@ -52,7 +52,14 @@ const ge = {
     "Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı": 
     "უკაცრავად, თქვენს მიერ არჩეული კრიტერიუმების შედეგები არ მოიძებნა",
     "Ətraflı Bax": "Იხილეთ დეტალები",
-    "Axtar": "ძებნა",   
+    "Axtar": "ძებნა",
+    "İcarə": "Ქირავდება",
+    "Satış": "იყიდე",
+    "Həftəlik": "7 დღე",
+    "Məsul şəxs": "Საკონტაქტო პირი",
+    "Mobil": "Მობილურის ნომერი",
+    "İcarə qiyməti": "ქირა ფასი",
+    "Satış qiyməti": "Გასაყიდი ფასი",   
 };
 
 export default ge;

@@ -14,6 +14,7 @@ const NewAd = () => {
     const [adName, setAdName] = useState('');
     const [city, setCity] = useState('Bakı');
     const [price, setPrice] = useState('');
+    const [salePrice, setSalePrice] = useState('');
     const [description, setDescription] = useState('');
     const [descriptionCount, setDescriptionCount] = useState(500);
     const [selectedImages, setSelectedImages] = useState([]);
@@ -83,6 +84,9 @@ const NewAd = () => {
         }
         if (e.target.name === 'price') {
             setPrice(e.target.value);
+        }
+        if (e.target.name === 'sale_price') {
+            setSalePrice(e.target.value);
         }
         if (e.target.name === 'description') {
             setDescription(e.target.value);
@@ -215,7 +219,7 @@ const NewAd = () => {
                 </div>
                 {/* enter the price */}
                 <div className='form-input'>
-                    <label htmlFor='price' className='label'>{t('Qiymət')}, AZN</label>
+                    <label htmlFor='price' className='label'>{t('İcarə qiyməti')}</label>
                     <div>
                          <input 
                             type='number' 
@@ -223,6 +227,22 @@ const NewAd = () => {
                             name='price' 
                             className='input price'
                             value={price}
+                            min={0}
+                            step={0.01}
+                            onChange={handleChange}
+                        />
+                         &nbsp;AZN
+                    </div>
+                </div>
+                <div className='form-input'>
+                    <label htmlFor='sale_price' className='label nostar'>{t('Satış qiyməti')}</label>
+                    <div>
+                         <input 
+                            type='number' 
+                            id='sale_price' 
+                            name='sale_price' 
+                            className='input price'
+                            value={salePrice}
                             min={0}
                             step={0.01}
                             onChange={handleChange}
@@ -354,7 +374,7 @@ h1 {
 
 .form-input {
     display: grid;
-    grid-template-columns: 150px 350px;
+    grid-template-columns: 160px 350px;
     justify-content: space-between;
 }
 
@@ -367,6 +387,10 @@ h1 {
 .label::after {
     content: ' *';
     color: #fc3205;
+}
+
+.nostar::after {
+    content: '';
 }
 
 .input {

@@ -54,6 +54,13 @@ const gb = {
     "Sorry, no products matching your search criteria were found",
     "Ətraflı Bax": "See details",
     "Axtar": "Search",
+    "İcarə": "Rent",
+    "Satış": "Buy",
+    "Həftəlik": "Weekly",
+    "Məsul şəxs": "Contact person",
+    "Mobil": "Mobile number",
+    "İcarə qiyməti": "Rent price",
+    "Satış qiyməti": "Sale price",
 };
 
 export default gb;

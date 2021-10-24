@@ -53,7 +53,14 @@ const ru = {
     "Bağışlayın, seçdiyiniz kriteriya üzrə heç bir məhsul tapılmadı": 
     "Извините, по выбранным вами критериям результатов не найдено",
     "Ətraflı Bax": "Смотрите подробности",
-    "Axtar": "Поиск",    
+    "Axtar": "Поиск",
+    "İcarə": "Арендовать",
+    "Satış": "Купить",
+    "Həftəlik": "Еженедельно",
+    "Məsul şəxs": "Контактное лицо",
+    "Mobil": "Номер мобильного",
+    "İcarə qiyməti": "Стоимость аренды",
+    "Satış qiyməti": "Цена продажи",    
 };
 
 export default ru;

@@ -20,15 +20,16 @@ const Item = (props) => {
             <img src={images[0]?.image_path} alt={title} onClick={handleClick}/>
             <footer className='image-info'>
                 <p className='name'>{title}</p>
-                <div className='x'>
+                <p className='buy line'>{t('İcarə')}</p>
+                <p className='buy'>{t('Satış')}</p>
+                <div className='line'>
                     <select className='days' value={daily} onChange={(e)=>{setDaily(+e.target.value)}}>
                         <option value='1'>{t('Günlük')}</option>
                         <option value='0'>{t('Həftəlik')}</option>
                     </select>
                 </div>
-                <p className='buy'>{t('Satış')}</p>
-                <div className='x'><p className='price'>{daily ? day : weekly} AZN</p></div>
-                <p className='price'> - </p>
+                <p className='price center'> 2 AZN </p>
+                <div className='line'><p className='price'>{daily ? day : weekly} AZN</p></div>
                 {/* <p className='date'>{full_name}, {t('Günlük')}</p> */}
             </footer>
         </ItemContainer>
@@ -63,7 +64,7 @@ const ItemContainer = styled.div`
         // justify-content: space-around;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
 
         align-items: center;
         text-align: center;
@@ -87,17 +88,25 @@ const ItemContainer = styled.div`
         text-align: center;
         border: none;
         outline: none;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 0;
     }
 
     .buy {
-        font-weight: 600
+        height: 100%;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-top: 1px solid #03b8f4;
     }
 
-    .x {
+    .center {
+        grid-area: 3 / 2 / 5 / 3;
+        font-size: 1.2rem;
+    }
+
+    .line {
         height: 100%;
-        border-right: 2px solid #000;
+        border-right: 1px solid #03b8f4;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -105,14 +114,14 @@ const ItemContainer = styled.div`
 
     @media screen and (max-width: 580px) {
         width: 150px;
-        height: 230px;
+        height: 225px;
 
         img {
             height: 150px;
         }
 
         .image-info {
-            height:70px;
+            height: 70px;
         }
 
         .price {

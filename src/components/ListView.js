@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 const ListView = ({products}) => {
     const {filtered_products_loading} = useFilterContext();
     const [count, setCount] = useState(400);
+    
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -28,17 +29,33 @@ const ListView = ({products}) => {
             className='loading'/>;
     }
 
+ 
+
     return (
         <>
             {products.map((product) => {
                 const {id, images, title, price, description} = product;
+                const [daily, setDaily] = useState(true);
+                const day = price;
+                const weekly = (price * 7 * 0.85).toFixed(2);
                 return (
                     <ListViewContainer key={id}>
                         <img src={images[0]?.image_path} alt={title} />
                         <div className='info'>
-                            <h3>{title}</h3>
-                            <h5 className='price'>{price} AZN</h5>
-                            <p>{description.length < count ? description : description.substring(0, count)}...</p>
+                            <h3 className='title'>{title}</h3>
+                            <div className='grid-price'>
+                                <p className='buy line'>{t('İcarə')}</p>
+                                <p className='buy'>{t('Satış')}</p>
+                                <div className='line'>
+                                    <select className='days' value={daily} onChange={(e)=>{setDaily(+e.target.value)}}>
+                                        <option value='1'>{t('Günlük')}</option>
+                                        <option value='0'>{t('Həftəlik')}</option>
+                                    </select>
+                                </div>
+                                <p className='price center'> 2 AZN </p>
+                                <div className='line'><p className='price'>{daily ? day : weekly} AZN</p></div>
+                            </div>
+                            <p>{description.length < count ? description : description.substring(0, count) + '...'}</p>
                             <Link to={`/products/${id}`} className='btn'>
                                 {t('Ətraflı Bax')}
                             </Link>
@@ -85,8 +102,44 @@ const ListViewContainer = styled.article`
         text-align: center;
     }
 
-    .price {
+    .title {
         color: #00C1FF;
+    }
+
+    .grid-price {
+        width: 200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        text-align: center;
+    }
+
+    .buy {
+        height: 100%;
+        font-weight: 600;
+        font-size: 1.1rem;
+        // border-top: 1px solid #000;
+    }
+
+    .center {
+        grid-area: 2 / 2 / 4 / 3;
+        font-size: 1.2rem;
+    }
+
+    .line {
+        height: 100%;
+        border-right: 1px solid #03b8f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .days {
+        text-align: center;
+        border: none;
+        outline: none;
+        font-size: 0.9rem;
+        font-weight: 0;
     }
 
     @media screen and (max-width: 1700px) {
