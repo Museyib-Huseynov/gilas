@@ -137,6 +137,7 @@ const NewAd = () => {
         bodyFormData.append('category_id', category);
         bodyFormData.append('title', adName);
         bodyFormData.append('price', Number(price));
+        bodyFormData.append('buy_price', Number(salePrice));
         bodyFormData.append('description', description);
         bodyFormData.append('full_name', name);
         bodyFormData.append('phone_number', mobile);

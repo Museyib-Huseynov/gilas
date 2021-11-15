@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const Item = (props) => {
     const [daily, setDaily] = useState(true);
-    const {id, images, price, title, full_name, renting_type} = props;
+    const {id, images, price, buy_price, title, full_name, renting_type} = props;
 
     const {t} = useTranslation();
 
@@ -28,7 +28,7 @@ const Item = (props) => {
                         <option value='0'>{t('Həftəlik')}</option>
                     </select>
                 </div>
-                <p className='price center'> 2 AZN </p>
+                <p className='price center'> {+buy_price === 0 ? '-' : `${buy_price} AZN`} </p>
                 <div className='line'><p className='price'>{daily ? day : weekly} AZN</p></div>
                 {/* <p className='date'>{full_name}, {t('Günlük')}</p> */}
             </footer>
