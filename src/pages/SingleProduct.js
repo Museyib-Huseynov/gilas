@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const SingleProduct = () => {
     const [daily, setDaily] = useState(true);
     const {single_item, single_item_loading, fetchSingleItem} = useProductsContext();
-    const {images, title, price, description, category, full_name, phone_number} = single_item;
+    const {images, title, price, buy_price, description, category, full_name, phone_number} = single_item;
 
     const {t} = useTranslation();
 
@@ -50,7 +50,7 @@ const SingleProduct = () => {
                                             <option value='0'>{t('Həftəlik')}</option>
                                         </select>
                                     </div>
-                                    <p className='price center'> 2 AZN </p>
+                                    <p className='price center'>{+buy_price === 0 ? '-' : `${buy_price} AZN`}</p>
                                     <div className='line'><p className='price'>{daily ? day : weekly} AZN</p></div>
                                 </div>
                                 <p className='description'>{description}</p>
