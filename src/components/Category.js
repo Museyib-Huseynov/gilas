@@ -14,7 +14,7 @@ const Category = (props) => {
 
     const handleClick = () => {
         dispatch({type: UPDATE_FILTERS, payload: {name: 'category', value: id}});
-        history.push('/products');
+        history.push(`/products/categories/${id}`);
     }
     return (
         <CategoryContainer onClick={handleClick}>

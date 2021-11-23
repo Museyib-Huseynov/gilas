@@ -27,7 +27,7 @@ function App() {
           <Route exact path='/signup'>
             <Signup />
           </Route>
-          <Route exact path='/products'>
+          <Route exact path='/products/categories/:categoryID'>
             <Products />
           </Route>
           <Route exact path='/products/:id'>

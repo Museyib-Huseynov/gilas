@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import {Sort, GridView, ListView, Filters} from '../components';
 import { useFilterContext } from '../context/filter_context';
@@ -13,14 +14,17 @@ const Products = () => {
         filters,
     } = useFilterContext();
 
+    const {categoryID} = useParams();
+
     useEffect(() => {
-        filterAndSortProducts();
+        filterAndSortProducts(categoryID);
         // eslint-disable-next-line
     }, [sort, 
         filters.text, 
         filters.category, 
         filters.min_price_limit_, 
-        filters.max_price_limit_]);
+        filters.max_price_limit_,
+    ]);
 
     return (
         <>

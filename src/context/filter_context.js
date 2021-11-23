@@ -93,7 +93,7 @@ export const FilterProvider = ({children}) => {
         dispatch({type: UPDATE_FILTERS, payload: {name, value}})
     };
 
-    const filterAndSortProducts = async () => {
+    const filterAndSortProducts = async (categoryID) => {
         dispatch({type: FS_BEGIN});
         try {
             const {text, min_price_limit_, max_price_limit_, category} = state.filters;
@@ -102,7 +102,7 @@ export const FilterProvider = ({children}) => {
                     title=${text}&
                     min_price=${min_price_limit_}&
                     max_price=${max_price_limit_}&
-                    category=${category}&
+                    category=${categoryID}&
                     sort=price,${state.sort}`);
             const data = response.data.data.data;
             dispatch({type: FS_SUCCESS, payload: data});

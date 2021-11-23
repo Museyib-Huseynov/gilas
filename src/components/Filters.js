@@ -4,6 +4,7 @@ import { useFilterContext } from '../context/filter_context';
 import { useCategoriesContext } from '../context/categories_context';
 import {DoubleRangeSlider} from '.';
 import { useTranslation } from 'react-i18next';
+import {useParams, useHistory} from 'react-router-dom';
 
 const Filters = () => {
     const {categories} = useCategoriesContext();
@@ -17,6 +18,9 @@ const Filters = () => {
         updateFilters,
         clearFilters} = useFilterContext();
     const {t} = useTranslation();
+
+    const {categoryID} = useParams();
+    let history = useHistory();
     return (
         <FiltersContainer>
             <form>
@@ -35,9 +39,12 @@ const Filters = () => {
                         type='button'
                         name={'category'} 
                         className={`${
-                            category === '' ? 'cat-btn active' : 'cat-btn'
+                            +categoryID === 0 ? 'cat-btn active' : 'cat-btn'
                           }`}
-                          onClick={updateFilters}
+                        onClick={(e) => {
+                            updateFilters(e);
+                            history.push(`/products/categories/0`);
+                        }}
                     >
                         {t('Hamısı')}
                     </button>
@@ -49,9 +56,12 @@ const Filters = () => {
                             name={'category'} 
                             type='button'
                             className={`${
-                                +category === +c.id ? 'cat-btn active' : 'cat-btn'
+                                +categoryID === +c.id ? 'cat-btn active' : 'cat-btn'
                               }`}
-                            onClick={updateFilters}
+                            onClick={(e) => {
+                                updateFilters(e);
+                                history.push(`/products/categories/${c.id}`);
+                            }}
                         >
                             {t(`${c.title}`)}
                         </button>

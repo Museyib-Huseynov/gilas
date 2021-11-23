@@ -60,7 +60,7 @@ const Navbar = () => {
                     {/* navlinks start */}
                     <div className='nav-links'>
                         <NavLink 
-                            to='/products' 
+                            to='/products/categories/0' 
                             className='link1' 
                             activeClassName='active' 
                             onClick={() => {
